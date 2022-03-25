@@ -2,6 +2,12 @@
 layout: default
 ---
 
+<div id="video_wrapper">
+  <video autoplay loop>
+    <source src="https://drive.google.com/uc?export=view&id=12KrfdIWuw6_KdWhjWPvWkxC58EiUyfBq" type="video/mp4">
+  </video>
+</div>
+
 **Project Description**
 
 Our project will support high school students who struggle with mental health. Our website will be an open resource available for students who want to find articles, contact therapists, or find simple solutions to find relief. High school is a time of lots of stress, anxiety, and with our website, we hope to aid high school students across the nation and support them so they can reach their highest potential!
