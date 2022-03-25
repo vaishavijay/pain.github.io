@@ -16,7 +16,7 @@ For hardware, we obtained AWS, launched an EC2 instance, and downloaded the key 
 
 **Project GitHub License**
 
-The GitHub license we chose was Creative Commons Zero v1.0 Universal. With CC0 license we waive copyright interest which means we can't make money on patents. For users, using our code in Github is free(cost of free). By giving up copyright interest we can make our project has a wider reach. If we choose other licenses, the user may not use our project because the cost is not free. And they will not share our project with their friends, family, co-worker, etc. This project we made is our first try, so the goal of this project is to gain more influence as we can, and to gain money is not necessary and not our first goal. That's the reason why we chose this license.
+The GitHub license we chose was Creative Commons Zero v1.0 Universal. With CC0 license we waive copyright interest which means we can't make money of it. For users, using our code in Github is free(cost of free). By giving up copyright interest we can make our project has a wider reach. If we choose other licenses, the user may not use our project because the cost is not free. And they will not share our project with their friends, family, co-worker, etc. This project we made is our first try, so the goal of this project is to gain more influence as we can, and to gain money is not necessary and not our first goal. That's the reason why we chose this license.
 
 
 **Project Wireframe**
