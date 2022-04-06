@@ -9,4 +9,6 @@ app = Flask(__name__)
 def index():
     return render_template("index.html")
   
+def authorize():
+    return render_template("authorize.html")
 #Pranavi and Gigi
