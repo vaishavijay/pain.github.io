@@ -1,2 +1,2 @@
 #Pranavi and Gigi
-from crud.app_crud import app_crud
+from cruddy.app_crud import app_crud
