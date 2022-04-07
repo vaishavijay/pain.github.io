@@ -13,6 +13,10 @@ app.register_blueprint(app_crud_api)
 def index():
     return render_template("index.html")
 
+@app.route('/authorize')
+def authorize():
+    return render_template("authorize.html")
+
 
 @app.errorhandler(404)
 def page_not_found(e):

@@ -5,48 +5,31 @@
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            
-
-            <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
-                <ul class="navbar-nav">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            About Us
-                        </a>
-                        <!--<ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-                            <li><a class="dropdown-item" href={{ url_for('') }}></a></li>
-                            <li><a class="dropdown-item" href={{ url_for('') }}></a></li>
-                            <li><a class="dropdown-item" href={{ url_for('') }}></a></li>
-                            <li><a class="dropdown-item" href={{ url_for('') }}></a></li>
-                            <li><a class="dropdown-item" href={{ url_for('') }}></a></li>
-                        </ul>-->
-                    </li>
-                </ul>
-            </div>
-
-    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <div class="navbar-nav">
-            <!-- url_for is a Jinja2 pre-processor that finds route from function name (def) -->
-            <a class="nav-link" href={{ url_for('authorize') }}>Log in</a>
         </div>
-    </div>
- 
 
-            <div class="btn-group">
-                <!-- Clock display -->
-                <div class="px-3 text-navbar-dark-color">
-                    <span id="clock"></span>
-                </div>
-                <!-- Dark mode action -->
-                <div class="form-check form-switch">
-                    <input type="checkbox" onclick="darkFunction()" class="form-check-input" id="darkSwitch">
-                    <label class="custom-control-label" for="darkSwitch">Dark Mode</label>
-                </div>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <!-- url_for is a Jinja2 pre-processor that finds route from function name (def) -->
+                <a class="nav-link" href="{{ url_for('crud.crud_login') }}">Log in</a>
             </div>
         </div>
+
+        <div class="btn-group">
+            <!-- Clock display -->
+            <div class="px-3 text-navbar-dark-color">
+                <span id="clock"></span>
+            </div>
+            <!-- Dark mode action -->
+            <div class="form-check form-switch">
+                <input type="checkbox" onclick="darkFunction()" class="form-check-input" id="darkSwitch">
+                <label class="custom-control-label" for="darkSwitch">Dark Mode</label>
+            </div>
+        </div>
+
         {% block navbar_script %}
-            <!-- Navigation bar JavaScript support -->
-            <script src={{  url_for("static", filename="javascript/navbar.js", version='140') }}></script>
+        <!-- Navigation bar JavaScript support -->
+        <script src={{  url_for("static", filename="javascript/navbar.js", version='140') }}></script>
         {% endblock %}
+
     </div>
 </nav>
