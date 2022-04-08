@@ -11,7 +11,7 @@ app_crud = Blueprint('crud', __name__,
                      url_prefix='/crud',
                      template_folder='templates/cruddy/',
                      static_folder='static',
-                     static_url_path='static')
+                     static_url_path='../static')
 
 """ Blueprint is established to isolate Application control code for CRUD operations, key features:
     1.) 'Users' table control methods, controls relationship between User Actions and Database Model
