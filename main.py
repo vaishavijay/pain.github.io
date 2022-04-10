@@ -17,6 +17,10 @@ def index():
 def authorize():
     return render_template("authorize.html")
 
+@app.route('/gmap')
+def gmap():
+    return render_template("gmap.html")
+
 
 @app.errorhandler(404)
 def page_not_found(e):
