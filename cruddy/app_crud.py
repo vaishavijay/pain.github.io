@@ -48,8 +48,8 @@ def crud_login():
     # if not logged in, show the login page
     return render_template("login.html")
 
-@app_crud.route('/login2/', methods=["GET", "POST"])
-def crud_login2():
+@app_crud.route('/mlogin/', methods=["GET", "POST"])
+def crud_mlogin():
     # obtains form inputs and fulfills login requirements
     if request.form:
         email = request.form.get("email")
@@ -58,7 +58,7 @@ def crud_login2():
             return redirect(url_for('gmap'))
 
     # if not logged in, show the login page
-    return render_template("login2.html")
+    return render_template("mlogin.html")
 
 @app_crud.route("/logout")
 @login_required
@@ -80,6 +80,21 @@ def crud_authorize():
             return redirect(url_for('crud.crud_login'))
     # show the auth user page if the above fails for some reason
     return render_template("authorize.html")
+
+@app_crud.route('/mauthorize/', methods=["GET", "POST"])
+def crud_mauthorize():
+    # check form inputs and creates user
+    if request.form:
+        # validation should be in HTML
+        user_name = request.form.get("user_name")
+        email = request.form.get("email")
+        phone = request.form.get("phone")
+        password1 = request.form.get("password1")
+        password2 = request.form.get("password1")           # password should be verified
+        if authorize(user_name, email, phone, password1):    # zero index [0] used as user_name and email are type tuple
+            return redirect(url_for('crud.crud_mlogin'))
+    # show the auth user page if the above fails for some reason
+    return render_template("mauthorize.html")
 
 
 # CRUD create/add
