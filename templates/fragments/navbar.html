@@ -12,12 +12,16 @@
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
                 <!-- url_for is a Jinja2 pre-processor that finds route from function name (def) -->
+                <a class="dropdown-item" href={{url_for('notes.notes')}}>SQL Notes</a>
+
                 <a class="nav-link" href="{{ url_for('crud.crud_mlogin') }}">Map</a>
-            </div>
-            <div class="navbar-nav">
+
                 <!-- url_for is a Jinja2 pre-processor that finds route from function name (def) -->
                 <a class="nav-link" href="{{ url_for('crud.crud_login') }}">Log in</a>
+                <!-- url_for is a Jinja2 pre-processor that finds route from function name (def) -->
+                <a class="nav-link" href={{ url_for('music') }}>Music</a>
             </div>
+
         </div>
 
         <div class="btn-group">
