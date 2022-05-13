@@ -39,8 +39,4 @@ def gmap():
 
 if __name__ == "__main__":
     # runs the application on the repl development server
-    app.run(
-        host='0.0.0.0',
-        debug=True,
-        port=8080
-    )
+    app.run(debug=True)

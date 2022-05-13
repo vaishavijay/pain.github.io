@@ -67,16 +67,21 @@
 <img style="left: 553px;top: 312px;" src="/static/assets/image2.png" alt="Contacting information">
 <p style="left: 579px; top: 510px;">Contacting information</p>
 
-<img style="left: 1003px;top: 312px;" src="/static/assets/image3.png" alt="Games">
+<a class="nav-link" href="{{ url_for('games') }}"><img style="left: 1003px;top: 312px;" src="/static/assets/image3.png" alt="Games"></a>
 <p style="left: 1045px; top: 510px;">Games/Break Time</p>
 
 <img style="left: 1452px;top: 312px;" src="/static/assets/image4.png" alt="Meditation">
 <p style="left: 1533px; top: 510px;">Meditation</p>
 
-<img style="left: 346px;top: 600px;" src="/static/assets/image5.png" alt="Therapists Near You [Map]">
+{% if current_user.is_authenticated %}
+<a class="nav-link" href="{{ url_for('gmap') }}"><img style="left: 346px;top: 600px;" src="/static/assets/image5.png" alt="Therapists Near You [Map]"></a>
+{% else %}
+<a class="nav-link" href="{{ url_for('crud.crud_login') }}"><img style="left: 346px;top: 600px;" src="/static/assets/image5.png" alt="Therapists Near You [Map]"></a>
+{% endif %}
+
 <p style="left: 354px; top: 800px;">Therapists Near You [Map]</p>
 
-<img style="left: 726px;top: 600px;" src="/static/assets/image6.png" alt="Music">
+<a class="nav-link" href="{{ url_for('music') }}"><img style="left: 726px;top: 600px;" src="/static/assets/image6.png" alt="Music"></a>
 <p style="left: 822px; top: 800px;">Music</p>
 
 <img style="left: 1106px;top: 600px;" src="/static/assets/image7.png" alt="Coming soon">
