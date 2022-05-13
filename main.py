@@ -21,6 +21,10 @@ def index():
 def music():
     return render_template("music.html")
 
+@app.route('/games')
+def games():
+    return render_template("games.html")
+
 @app.route('/authorize')
 def authorize():
     return render_template("authorize.html")
