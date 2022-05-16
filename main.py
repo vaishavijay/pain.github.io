@@ -21,9 +21,22 @@ def index():
 def music():
     return render_template("music.html")
 
+@app.route('/meditate')
+def meditate():
+    return render_template("meditate.html")
+
 @app.route('/games')
 def games():
     return render_template("games.html")
+
+@app.route('/game1')
+def game1():
+    return render_template("game1.html")
+
+@app.route('/game2')
+def game2():
+    return render_template("game2.html")
+
 
 @app.route('/authorize')
 def authorize():
@@ -39,8 +52,4 @@ def gmap():
 
 if __name__ == "__main__":
     # runs the application on the repl development server
-    app.run(
-        host='0.0.0.0',
-        debug=True,
-        port=8080
-    )
+    app.run(debug=True)
