@@ -29,6 +29,10 @@ def meditate():
 def games():
     return render_template("games.html")
 
+@app.route('/game1')
+def game1():
+    return render_template("game1.html")
+
 @app.route('/authorize')
 def authorize():
     return render_template("authorize.html")
