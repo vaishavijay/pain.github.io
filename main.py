@@ -33,6 +33,11 @@ def games():
 def game1():
     return render_template("game1.html")
 
+@app.route('/game2')
+def game2():
+    return render_template("game2.html")
+
+
 @app.route('/authorize')
 def authorize():
     return render_template("authorize.html")
