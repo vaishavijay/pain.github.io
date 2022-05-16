@@ -8,6 +8,9 @@
         position: relative;
         display: inline-block;
     }
+    .dropdown-menu1 {
+        position: relative;
+    }
     .menu-content {
         display: none;
         position: absolute;
@@ -39,6 +42,12 @@
     .dropdown-menu:hover .menu-btn {
         background-color: #3e8e41;
     }
+    .dropdown-menu1:hover .menu-content {
+        display: block;
+    }
+    .dropdown-menu1:hover .menu-btn {
+        background-color: #3e8e41;
+    }
 </style>
 
 <nav class="navbar navbar-expand-lg text-navbar-dark-color bg-navbar-light-color">
@@ -50,8 +59,14 @@
             </button>
         </div>
 
-        <a class="nav-link" href="{{ url_for('games') }}">Games</a>
-        <a class="nav-link" href="{{ url_for('music') }}">Music</a>
+
+        <div class="dropdown-menu1">
+            <a class="menu-btn">Games</a>
+            <div class="menu-content">
+                <a class="dropdown-menu" href="{{ url_for('games') }}">Avoid the Blue Block</a>
+                <a class="dropdown-menu" href="{{ url_for('game1') }}">Snake Game</a>
+            </div>
+        </div>        <a class="nav-link" href="{{ url_for('music') }}">Music</a>
 
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
