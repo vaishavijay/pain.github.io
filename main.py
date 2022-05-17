@@ -49,7 +49,7 @@ def gmap():
 @app.route('/api')
 def api():
     import requests
-    url = "https://mental-health-info-api.p.rapidapi.com/news"
+    url = "https://mental-health-info-api.p.rapidapi.com/news/thetimes"
 
     headers = {
         "X-RapidAPI-Host": "mental-health-info-api.p.rapidapi.com",
