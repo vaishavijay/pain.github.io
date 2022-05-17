@@ -1,7 +1,7 @@
-# Pranavi and Gigi
-from flask import render_template
+from flask import render_template, request
 from __init__ import app
-
+import json
+import requests
 from cruddy.app_crud import app_crud
 from cruddy.app_crud_api import app_crud_api
 from notey.app_notes import app_notes
@@ -46,6 +46,19 @@ def authorize():
 def gmap():
     return render_template("gmap.html")
 
+@app.route('/api')
+def api():
+    import requests
+    url = "https://mental-health-info-api.p.rapidapi.com/news"
+
+    headers = {
+        "X-RapidAPI-Host": "mental-health-info-api.p.rapidapi.com",
+        "X-RapidAPI-Key": "4ab4681ba9mshf17197c9d59be44p17d1edjsnabe7ccc22eb5"
+    }
+    response = requests.request("GET", url, headers=headers)
+    output = json.loads(response.text)
+    print(response.text)
+    return render_template("api.html", Z=output)
 
 
 
