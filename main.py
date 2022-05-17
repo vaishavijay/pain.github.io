@@ -61,6 +61,9 @@ def api():
     return render_template("api.html", Z=output)
 
 
+@app.route('/journal')
+def journal():
+    return render_template("journal.html")
 
 
 if __name__ == "__main__":
