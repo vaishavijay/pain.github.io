@@ -16,4 +16,13 @@
 </style>
 <center>
     <h1> Meditate </h1>
-    {% endblock %}
+    <button id="mv1" onclick="function displayVideo() {
+        function displayVideo() {
+            if($('#display-video').css('display') === 'none') $('#display-video').css('display', 'block')
+            else $('#display-video').css('display', 'none')
+    }
+    displayVideo()" style="font-size: 22px; width: 190px; height: 65px;">Meditation Practice</button>
+    <div id="display-video" style="display: none">
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/inpok4MKVLM"></iframe>
+        <!--iframe specifies an inline frame, that means it is used to embed some other document within the current HTML document.-->
+    </div>    {% endblock %}
