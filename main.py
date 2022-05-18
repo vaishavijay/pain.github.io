@@ -110,6 +110,11 @@ def gmap():
     return render_template("gmap.html")
 
 
+@app.route('/burnbook')
+def burnbook():
+    return render_template("burnbook.html")
+
+
 @app.route('/api')
 def api():
     import requests
@@ -133,4 +138,4 @@ def page_not_found(e):
 
 if __name__ == "__main__":
     # Replit required port, works on IntelliJ
-    app.run(debug=True)
+    app.run(debug=True, port="8081")
