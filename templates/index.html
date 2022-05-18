@@ -70,9 +70,8 @@
         <th><a class="nav-link" href="{{ url_for('games') }}"><img style="left: 1003px;top: 312px;" src="/static/assets/image3.png" alt="Games"></a>
             <p style="left: 1045px; top: 510px;">Games/Break Time</p></th>
     </tr>
+
     <tr>
-        <td><img style="left: 1452px;top: 312px;" src="/static/assets/image4.png" alt="Meditation">
-            <p style="left: 1533px; top: 510px;">Meditation</p></td>
         <td>{% if current_user.is_authenticated %}
             <a class="nav-link" href="{{ url_for('gmap') }}"><img style="left: 346px;top: 600px;" src="/static/assets/image5.png" alt="Therapists Near You [Map]"></a>
             {% else %}
@@ -81,6 +80,8 @@
             {% endif %}</td>
         <td><a class="nav-link" href="{{ url_for('music') }}"><img style="left: 726px;top: 600px;" src="/static/assets/image6.png" alt="Music"></a>
             <p style="left: 822px; top: 800px;">Music</p></td>
+        <tr><td><img style="left: 1452px;top: 312px;" src="/static/assets/image4.png" alt="Meditation">
+            <p style="left: 1533px; top: 510px;">Meditation</p></td></tr>
     </tr>
 </table>
 
