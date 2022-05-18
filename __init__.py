@@ -1,4 +1,3 @@
-# Pranavi and Gigi
 from flask import Flask
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
@@ -12,7 +11,7 @@ These object will be used throughout project.
 
 # Setup of key Flask object (app)
 app = Flask(__name__)
-dbURI = 'sqlite:///model/myDB.db'
+dbURI = 'sqlite:///myDB.db'
 # Setup SQLAlchemy object and properties for the database (db)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_DATABASE_URI'] = dbURI
@@ -22,3 +21,4 @@ Migrate(app, db)
 # Setup LoginManager object (app)
 login_manager = LoginManager()
 login_manager.init_app(app)
+next_page = None

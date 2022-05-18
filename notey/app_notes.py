@@ -1,3 +1,4 @@
+import markdown
 from flask import Blueprint, render_template, request, redirect, url_for
 from flask_login import login_required, current_user
 from cruddy.query import user_by_id
@@ -8,7 +9,7 @@ app_notes = Blueprint('notes', __name__,
                       url_prefix='/notes',
                       template_folder='templates/notey/',
                       static_folder='static',
-                      static_url_path='../cruddy/static')
+                      static_url_path='static')
 
 
 @app_notes.route('/notes')
