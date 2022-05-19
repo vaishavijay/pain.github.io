@@ -6,7 +6,7 @@ from cruddy.app_crud import app_crud
 from cruddy.app_crud_api import app_crud_api
 from notey.app_notes import app_notes
 
-from cruddy.login import login, logout, authorize
+from cruddy.login import login, logout, signup
 
 app.register_blueprint(app_crud)
 app.register_blueprint(app_crud_api)
@@ -64,10 +64,11 @@ def main_authorize():
         # validation should be in HTML
         user_name = request.form.get("user_name")
         email = request.form.get("email")
+        phone = request.form.get("phone")
         password1 = request.form.get("password1")
         password2 = request.form.get("password2")  # password should be verified
         if password1 == password2:
-            if authorize(user_name, email, password1):
+            if signup(user_name, email, phone, password1):
                 return redirect(url_for('main_login'))
         else:
             error_msg = "Passwords do not match"
