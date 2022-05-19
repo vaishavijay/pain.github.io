@@ -48,6 +48,13 @@
     .dropdown-menu1:hover .menu-btn {
         background-color: #3e8e41;
     }
+
+    {#.dropdown-menu2:hover .menu-content {#}
+    {#    display: block;#}
+    {#}#}
+    {#.dropdown-menu2:hover .menu-btn {#}
+    {#    background-color: #3e8e41;#}
+    {#}#}
 </style>
 
 <nav class="navbar navbar-expand-lg text-navbar-dark-color bg-navbar-light-color">
@@ -59,7 +66,6 @@
             </button>
         </div>
 
-
         <div class="dropdown-menu1">
             <a class="menu-btn">Games</a>
             <div class="menu-content">
@@ -67,12 +73,21 @@
                 <a class="nav-link" href="{{ url_for('game1') }}">Snake Game</a>
                 <a class="nav-link" href="{{ url_for('game2') }}">Flappy</a>
             </div>
-        </div>        <a class="nav-link" href="{{ url_for('music') }}">Music</a>
-                      <a class="nav-link" href="{{ url_for('api') }}">Info</a>
-                      <a class="nav-link" href="{{ url_for('journal') }}">Journal</a>
-                      <a class="nav-link" href="{{ url_for('meditate') }}">Meditation</a>
+{# ! DO NOT DELETE BELOW COMMENTS #}
+{#        <div class="dropdown-menu2">#}
+{#                <a class="menu-btn">Notes</a>#}
+{#            <div class="menu-content">#}
+{#                <a class="nav-link" href="{{ url_for('notes.notes') }}">Journal</a>#}
+{#                <a class="nav-link" href="{{ url_for('burnbook') }}">Burn Book</a>#}
+{#            </div>#}
 
+        </div>
+        <a class="nav-link" href="{{ url_for('music') }}">Music</a>
+        <a class="nav-link" href="{{ url_for('api') }}">Info</a>
 
+        {#    THE BELOW TWO LINES ARE TEMPORARY UNTIL THE DROPDOWN WORKS#}
+        <a class="nav-link" href="{{ url_for('notes.notes') }}">Journal</a>
+        <a class="nav-link" href="{{ url_for('burnbook') }}">Burn Book</a>
 
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
@@ -81,24 +96,19 @@
 
 
                 {% else %}
-                <a class="nav-link" href="{{ url_for('crud.crud_login') }}">Map</a>
+                <a class="nav-link" href="{{ url_for('main_login') }}">Map</a>
                 {% endif %}
             </div>
 
+            <!-- url_for is a Jinja2 pre-processor that finds route from function name (def) -->
 
-
-           <!-- url_for is a Jinja2 pre-processor that finds route from function name (def) -->
-
-
-
-                <!-- url_for is a Jinja2 pre-processor that finds route from function name (def) -->
-
+            <!-- url_for is a Jinja2 pre-processor that finds route from function name (def) -->
 
         </div>
 
         <div class="btn-group">
             <script async src="https://cse.google.com/cse.js?cx=c34a1f44743fb5273"></script>
-                <div class="gcse-search"></div>
+            <div class="gcse-search"></div>
             <!-- Clock display -->
             <div class="px-3 text-navbar-dark-color">
                 <span id="clock"></span>
@@ -111,16 +121,17 @@
 
             {% if current_user.is_authenticated %}
 
-                <div class="dropdown-menu">
-                    <button class="menu-btn">{{current_user.name}} <</button>
-                    <div class="menu-content">
-                        <a class="links-hidden" href="{{ url_for('crud.crud') }}">Admin Page</a>
-                        <a class="links-hidden" href="{{ url_for('crud.logout') }}">Logout</a>
-                    </div>
+            <div class="dropdown-menu">
+                <button class="menu-btn">{{current_user.name}} <</button>
+                <div class="menu-content">
+                    <a class="links-hidden" href="{{ url_for('crud.crud') }}">Admin Page</a>
+                    <a class="links-hidden" href="{{ url_for('crud.search') }}">Database Search</a>
+                    <a class="links-hidden" href="{{ url_for('main_logout') }}">Logout</a>
                 </div>
+            </div>
 
             {% else %}
-            <a class="nav-link" href="{{ url_for('crud.crud_login') }}" ><button class="btn btn-danger">Login</button></a>
+            <a class="nav-link" href="{{ url_for('main_login') }}" ><button class="btn btn-danger">Login</button></a>
             {% endif %}
 
         </div>

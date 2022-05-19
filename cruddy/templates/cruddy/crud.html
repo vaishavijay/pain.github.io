@@ -1,14 +1,13 @@
 <!DOCTYPE html>
-<!-- pranavi & gigi -->
 
 <!-- EXTEND (layout.html), this is a template for all rendered pages in the project -->
 {% extends "layout.html" %}
 
 <!-- CONTENT (in <head>), content for this page -->
-{% block meta %}
+{% block title %}
 <title>CRUD page</title>
-<script src={{  url_for("crud.static", filename="javascript/validation.js", version='101') }}></script>
-<script src={{  url_for("crud.static", filename="javascript/reload_page.js", version='101') }}></script>
+<script src={{url_for("crud.static", filename="javascript/validation.js", version='101') }}></script>
+<script src={{url_for("crud.static", filename="javascript/reload_page.js", version='101') }}></script>
 {% endblock %}
 
 <!-- CONTENT (in <body>), content for this page -->
@@ -16,12 +15,8 @@
 <div class="container py-4">
     <header class="pb-3 mb-4 border-bottom border-primary text-dark">
         <span class="fs-4">SQL CRUD Admin Page</span>
-        <a href = {{ url_for ('crud.crud_login' )}}> Logout </a>
     </header>
 </div>
-
-
-
 <div class="container py-4 text-light bg-success">
 
     <div class="container bg-secondary py-4">
@@ -165,8 +160,8 @@
             <div class="col-md-3">
                 <div class="p-5 mb-4 bg-light text-dark rounded-3">
                     <h2>Delete</h2>
-                    <form method="POST" ID="read" action={{url_for('crud.delete')}} >
-                        <table id="read_table">
+                    <form method="POST" ID="delete" action={{url_for('crud.delete')}} >
+                        <table id="delete_table">
                             <tr><th><label for="delete_userid">ID</label></th></tr>
                             <tr>
                                 <td>
@@ -189,24 +184,6 @@
 
     </div>
 
-</div>
-
-<!-- Back end SQL data definition code (SQLalchemy) -->
-<div class="container py-4">
-    <h1 id="BE-MODEL">Back End Definition Code (Model) </h1>
-    <script src="https://emgithub.com/embed.js?target=https%3A%2F%2Fgithub.com%2Fnighthawkcoders%2Fnighthawk_csp%2Fblob%2Fmaster%2Fcrud%2Fmodel.py&style=github&showBorder=on&showLineNumbers=on&showFileMeta=on&showCopy=on"></script>
-</div>
-
-<!-- Front End HTML, shows this file -->
-<div class="container py-4">
-    <h1 id="FE-VIEW">Front End HTML Code (View) </h1>
-    <script src="https://emgithub.com/embed.js?target=https%3A%2F%2Fgithub.com%2Fnighthawkcoders%2Fnighthawk_csp%2Fblob%2Fmaster%2Fcrud%2Ftemplates%2Fcrud%2Fcrud.html&style=github&showBorder=on&showLineNumbers=on&showFileMeta=on&showCopy=on"></script>
-</div>
-
-<!-- Back Route code -->
-<div class="container py-4">
-    <h1 id="BE-CONTROL">Back End Form Request and API Code (Control)</h1>
-    <script src="https://emgithub.com/embed.js?target=https%3A%2F%2Fgithub.com%2Fnighthawkcoders%2Fnighthawk_csp%2Fblob%2Fmaster%2Fcrud%2Fapp_crud.py&style=github&showBorder=on&showLineNumbers=on&showFileMeta=on&showCopy=on"></script>
 </div>
 
 {% endblock %}

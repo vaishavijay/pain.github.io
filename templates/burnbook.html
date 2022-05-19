@@ -4,8 +4,9 @@
 
 
 {% block content %}
+
 <head>
-    <title>Journal</title>
+    <title>Burnbook</title>
     <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function() {
@@ -65,9 +66,8 @@
     </style>
 </head>
 <body>
-<h1>
-    Journal:
-</h1>
+<h1>Burn Book:</h1>
+<h4>.  Rant in the textbox below and reload the page to delete everything for a fresh page!</h4>
 <textarea id="text" autofocus spellcheck="false"></textarea>
 <div id="ruler"></div>
 <div id="statusBar">
@@ -75,5 +75,5 @@
 </div>
 </body>
 </html>
-{% endblock %}
 <!-- inspiration: https://gist.github.com/orrsella/5993867#file-notepad-html-L2 -->
+{% endblock %}

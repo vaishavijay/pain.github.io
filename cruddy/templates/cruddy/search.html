@@ -4,29 +4,26 @@ inspiration from https://www.youtube.com/watch?v=QKcVjdLEX_s
 -->
 {% extends "layout.html" %}
 
-{% block meta %}
+{% block title %}
 <title>SQL search</title>
 {% endblock %}
 
 {% block content %}
-<div class="container py-4 bg-primary">
-    <!-- heading -->
-    <header class="pb-3 mb-4 border-bottom">
-        <a href="#" class="d-flex align-items-center text-light text-decoration-none">
-            <span class="fs-4">Search Database</span>
-        </a>
+<div class="container py-4">
+    <header class="pb-3 mb-4 border-bottom border-primary text-dark">
+        <span class="fs-4">Search Database</span>
     </header>
-    <!-- search box -->
-    <div class="container">
-        <div class="row">
-            <div class="col">
-                <div class="mb-3">
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="term" placeholder="enter search term">
-                        <label></label> <!-- used for spacer -->
-                    </div>
-                    <button class="btn btn-primary bg-secondary" onclick="search_data();">Search</button>
+</div>
+<!-- search -->
+<div class="container py-4 text-light bg-success">
+    <div class="row">
+        <div class="col">
+            <div class="mb-3">
+                <div class="form-group">
+                    <input type="text" class="form-control" id="term" placeholder="Enter search term">
+                    <label></label> <!-- used for spacer -->
                 </div>
+                <button class="btn btn-primary bg-secondary" onclick="search_data();">Search</button>
             </div>
         </div>
     </div>

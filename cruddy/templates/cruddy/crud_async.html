@@ -4,9 +4,9 @@
 {% extends "layout.html" %}
 
 <!-- CONTENT (in <head>), content for this page -->
-{% block meta %}
+{% block title %}
 <title>Async CRUD page</title>
-<script src={{  url_for("crud.static", filename="javascript/validation.js", version='101') }}></script>
+<script src={{url_for("crud.static", filename="javascript/validation.js", version='101')}}></script>
 
 <script>
     function create_User(){
@@ -228,14 +228,14 @@
 
 <!-- CONTENT (in <body>), content for this page -->
 {% block content %}
-<div class="container py-4 text-light bg-success">
-    <header class="pb-3 mb-4 border-bottom">
-        <div class="d-flex align-items-center text-light text-decoration-none">
-            <span class="fs-4">Async SQL CRUD Admin Page</span>
-        </div>
+<div class="container py-4">
+    <header class="pb-3 mb-4 border-bottom border-primary text-dark">
+        <span class="fs-4">Async SQL CRUD Admin Page</span>
     </header>
+</div>
+<div class="container py-4 text-light bg-success">
 
-    <div class="container py-4">
+    <div class="container bg-secondary py-4">
         <div class="p-5 mb-4 bg-light text-dark rounded-3">
             <h2>Table Viewer</h2>
             <div class="row align-items-md-stretch">
@@ -285,10 +285,9 @@
             </div>
         </div>
     </div>
-    <div class="container py-4">
+    <div class="container bg-secondary py-4">
         <div class="p-5 mb-4 bg-light text-dark rounded-3">
             <h2>Create a new record</h2>
-
             <table class="table">
                 <thead>
                 <tr>
@@ -312,81 +311,88 @@
             <p id="pswError"></p>
         </div>
     </div>
-    <div class="container py-4">
-        <div class="row mb-4 bg-light text-dark rounded-3">
-            <div class="col-md-3">
-                <div class="p-5 mb-4 bg-light text-dark rounded-3">
-                    <h2>Read</h2>
-                    <!-- <input type="submit" value="Read" -->
-                    <table id="read_table">
-                        <tr><th><label for="read_userid">ID</label></th></tr>
-                        <tr>
-                            <td>
-                                <select name="userid" id="read_userid">
-                                    <optgroup id="ogr_userid" label="userid" >
-                                        {% for row in table %}
-                                        <option id="option" label="{{ row['userID'] }}">{{ row['userID'] }}</option>
-                                        {% endfor %}
-                                    </optgroup>
-                                </select>
-                            </td>
-                            <td>
-                                <!-- <input type="submit" value="Read" -->
-                                <button onclick="read_User()">Read</button>
-                            </td>
-                        </tr>
-                    </table>
+
+    <div class="container bg-secondary py-4">
+        <div class="p-5 mb-4 bg-light text-dark rounded-3">
+            <div class="row mb-4 bg-light text-dark rounded-3">
+                <div class="col-md-3">
+                    <div class="p-5 mb-4 bg-light text-dark rounded-3">
+                        <h2>Read</h2>
+                        <!-- <input type="submit" value="Read" -->
+                        <table id="read_table">
+                            <tr>
+                                <th><label for="read_userid">ID</label></th>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <select name="userid" id="read_userid">
+                                        <optgroup id="ogr_userid" label="userid" >
+                                            {% for row in table %}
+                                            <option id="option" label="{{ row['userID'] }}">{{ row['userID'] }}</option>
+                                            {% endfor %}
+                                        </optgroup>
+                                    </select>
+                                </td>
+                                <td>
+                                    <!-- <input type="submit" value="Read" -->
+                                    <button onclick="read_User()">Read</button>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-6">
-                <div class="p-5 mb-4 bg-light text-dark rounded-3">
-                    <h2>Update</h2>
-                    <table id="update_table">
-                        <tr>
-                            <th><label for="update_userid">ID</label></th>
-                            <th><label for="update_name">Name</label></th>
-                        </tr>
-                        <tr>
-                            <td>
-                                <select name="userid" id="update_userid">
-                                    <optgroup id="ogu_userid" label="userid" >
-                                        {% for row in table %}
-                                        <option label="{{ row['userID'] }}">{{ row['userID'] }}</option>
-                                        {% endfor %}
-                                    </optgroup>
-                                </select>
-                            </td>
-                            <td><input type="text" name="name" id="update_name" required></td>
-                            <!-- td><input type="submit" value="Update"></td -->
-                            <td> <button onclick="update_User()">Update</button>
-                            </td>
-                        </tr>
-                    </table>
+                <div class="col-md-6">
+                    <div class="p-5 mb-4 bg-light text-dark rounded-3">
+                        <h2>Update</h2>
+                        <table id="update_table">
+                            <tr>
+                                <th><label for="update_userid">ID</label></th>
+                                <th><label for="update_name">Name</label></th>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <select name="userid" id="update_userid">
+                                        <optgroup id="ogu_userid" label="userid" >
+                                            {% for row in table %}
+                                            <option label="{{ row['userID'] }}">{{ row['userID'] }}</option>
+                                            {% endfor %}
+                                        </optgroup>
+                                    </select>
+                                </td>
+                                <td><input type="text" name="name" id="update_name" required></td>
+                                <!-- td><input type="submit" value="Update"></td -->
+                                <td> <button onclick="update_User()">Update</button>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-3">
-                <div class="p-5 mb-4 bg-light text-dark rounded-3">
-                    <h2>Delete</h2>
-                    <table id="read_table">
-                        <tr><th><label for="delete_userid">ID</label></th></tr>
-                        <tr>
-                            <td>
-                                <select name="userid" id="delete_userid">
-                                    <optgroup id="ogd_userid" label="userid">
-                                        {% for row in table %}
-                                        <option label="{{ row['userID'] }}">{{ row['userID'] }}</option>
-                                        {% endfor %}
-                                    </optgroup>
-                                </select>
-                            </td>
-                            <td><button onclick="delete_User()">Delete</button></td>
-                        </tr>
-                    </table>
+                <div class="col-md-3">
+                    <div class="p-5 mb-4 bg-light text-dark rounded-3">
+                        <h2>Delete</h2>
+                        <table id="delete_table">
+                            <tr>
+                                <th><label for="delete_userid">ID</label></th>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <select name="userid" id="delete_userid">
+                                        <optgroup id="ogd_userid" label="userid">
+                                            {% for row in table %}
+                                            <option label="{{ row['userID'] }}">{{ row['userID'] }}</option>
+                                            {% endfor %}
+                                        </optgroup>
+                                    </select>
+                                </td>
+                                <td><button onclick="delete_User()">Delete</button></td>
+                            </tr>
+                        </table>
+                    </div>
                 </div>
+
             </div>
 
         </div>
-
     </div>
 
 </div>
