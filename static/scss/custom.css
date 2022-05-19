@@ -70,7 +70,7 @@ $theme-colors: (
   --bs-secondary: #a1a9bd;
   --bs-btn-color: #8C52FF;
   --bs-navbar-dark-color: #212529;
-  --bs-navbar-light-color: #f8f9fa;
+  --bs-navbar-light-color: #9AB8D3;
   --bs-Idea1-bg: #C2DCFF;
   --bs-Idea2-bg: #FFD3D3;
   --bs-Idea3-bg: #DCD0F4;
@@ -81,7 +81,7 @@ $theme-colors: (
   --bs-secondary-rgb: 161, 169, 189;
   --bs-btn-color-rgb: 140, 82, 255;
   --bs-navbar-dark-color-rgb: 33, 37, 41;
-  --bs-navbar-light-color-rgb: 248, 249, 250;
+  --bs-navbar-light-color-rgb: 154, 184, 211;
   --bs-Idea1-bg-rgb: 194, 220, 255;
   --bs-Idea2-bg-rgb: 255, 211, 211;
   --bs-Idea3-bg-rgb: 220, 208, 244;
@@ -91,7 +91,7 @@ $theme-colors: (
   --bs-white-rgb: 255, 255, 255;
   --bs-black-rgb: 0, 0, 0;
   --bs-body-color-rgb: 33, 37, 41;
-  --bs-body-bg-rgb: 203, 245, 246;
+  --bs-body-bg-rgb: 242, 242, 232;
   --bs-font-sans-serif: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   --bs-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
@@ -100,7 +100,7 @@ $theme-colors: (
   --bs-body-font-weight: 400;
   --bs-body-line-height: 1.5;
   --bs-body-color: #212529;
-  --bs-body-bg: #CBF5F6;
+  --bs-body-bg: #F2F2E8;
 }
 
 *,
@@ -8009,6 +8009,11 @@ textarea.form-control-lg {
 .bg-navbar-light-color {
   --bs-bg-opacity: 1;
   background-color: rgba(var(--bs-navbar-light-color-rgb), var(--bs-bg-opacity)) !important;
+}
+
+.bg-navbar-darkblue-color {
+  --bs-bg-opacity: 1;
+  background-color: rgba(var(--bs-navbar-darkblue-color-rgb), var(--bs-bg-opacity)) !important;
 }
 
 .bg-Idea1-bg {
