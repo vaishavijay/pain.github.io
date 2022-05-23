@@ -3,86 +3,97 @@
 
 {% block meta %}
 <title>Team Pain</title>
-{% endblock %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
 
+{% endblock %}
 {% block content %}
 <style>
     h1 {
-        position: absolute;
-        width: 999px;
-        height: 113px;
-
+        margin-top: 10px;
+        height: 90px;
         font-family: 'Righteous';
         font-style: normal;
         font-weight: 400;
         font-size: 70px;
         line-height: 75px;
-        left: 50px;
-        top: 101px;
+
         color: #6886A2;
 
     }
     h3 {
-        position: absolute;
-        width: 999px;
         height: 39px;
         font-family: 'Antonio';
         font-style: normal;
-        font-weight: 400;
         font-size: 30px;
         line-height: 39px;
         /* identical to box height */
         color: #000000;
-        left: 104px;
-        top: 190px;
     }
 
     p {
-        position: absolute;
-        width: 999px;
-        height: 28px;
+        height: 20px;
         font-family: 'Antonio';
         font-style: normal;
-        font-weight: 400;
         font-size: 22px;
         line-height: 28px;
         color: #000000;
     }
 
     img {
-        position: absolute;
         width: 257px;
         height: 199px;
-        border-radius: 24px;
+    }
+
+    .centered-row {
+        height: 250px;
     }
 </style>
 
+<body>
 
-<h1>Welcome to MyMind!</h1>
-<h3>You don't have to struggle in silence</h3>
+<div class="container">
+{#header#}
+        <div class="row">
+            <div class="col-12"><h1>Welcome to MyMind!</h1></div>
+            <div class="col-12 offset-1"><h3>You don't have to struggle in silence</h3></div>
+        </div>
 
-<table style="width:100%">
-    <tr>
-        <th><img style="left: 104px;top: 312px;" src="/static/assets/image1.png" alt="Vent Journal">
-            <p style="left: 178px; top: 510px;">Vent Journal</p></th>
-        <th><img style="left: 553px;top: 312px;" src="/static/assets/image2.png" alt="Contacting information">
-            <p style="left: 579px; top: 510px;">Contacting information</p></th>
-        <th><a class="nav-link" href="{{ url_for('games') }}"><img style="left: 1003px;top: 312px;" src="/static/assets/image3.png" alt="Games"></a>
-            <p style="left: 1045px; top: 510px;">Games/Break Time</p></th>
-    </tr>
+{#row 1#}
+    <div class="row centered-row justify-content-center align-content-center gx-3">
+    <div class="col-sm-12 col-md-4 col-lg-4"><img src="/static/assets/image1.png" alt="Vent Journal"></div>
+    <div class="col-sm-12 col-md-4 col-lg-4"><img src="/static/assets/image2.png" alt="Contacting information"></div>
+    <div class="col-sm-12 col-md-4 col-lg-4"><a class="nav-link" href="{{ url_for('games') }}">
+        <img src="/static/assets/image3.png" alt="Games"></a></div>
+</div>
 
-    <tr>
-        <td>{% if current_user.is_authenticated %}
-            <a class="nav-link" href="{{ url_for('gmap') }}"><img style="left: 346px;top: 600px;" src="/static/assets/image5.png" alt="Therapists Near You [Map]"></a>
-            {% else %}
-            <a class="nav-link" href="{{ url_for('main_login') }}"><img style="left: 346px;top: 600px;" src="/static/assets/image5.png" alt="Therapists Near You [Map]"><p style="left: 354px; top: 800px;">Therapists Near You [Map]</p>
+<div class="row justify-content-center align-content-center">
+    <div class="col-sm-12 col-md-4 col-lg-4"><p>Vent Journal</p></div>
+    <div class="col-sm-12 col-md-4 col-lg-4">Contacting Info</div>
+    <div class="col-sm-12 col-md-4 col-lg-4">Games/Break Time</div>
+</div>
+
+{#row 2#}
+<div class="row centered-row justify-content-center align-content-center gx-3">
+    <div class="col-sm-12 col-md-4 col-lg-4"><td><img src="/static/assets/image4.png" alt="Meditation"></td></div>
+    <div class="col-sm-12 col-md-4 col-lg-4">
+        {% if current_user.is_authenticated %}
+            <a class="nav-link" href="{{ url_for('gmap') }}">
+                <img src="/static/assets/image5.png" alt="Therapists"></a>
+        {% else %}
+            <a class="nav-link" href="{{ url_for('main_login') }}">
+                <img src="/static/assets/image5.png" alt="Therapists Near You [Map]">
+                <p>Therapists Near You [Map]</p>
             </a>
-            {% endif %}</td>
-        <td><a class="nav-link" href="{{ url_for('music') }}"><img style="left: 726px;top: 600px;" src="/static/assets/image6.png" alt="Music"></a>
-            <p style="left: 822px; top: 800px;">Music</p></td>
-        <tr><td><img style="left: 1452px;top: 312px;" src="/static/assets/image4.png" alt="Meditation">
-            <p style="left: 1533px; top: 510px;">Meditation</p></td></tr>
-    </tr>
-</table>
-
+        {% endif %}
+    </div>
+<div class="col-4"><a class="nav-link" href="{{ url_for('music') }}">
+         <img src="/static/assets/image6.png" alt="Music"></a></div>
+        </div>
+         <div class="row justify-content-center align-content-center">
+            <div class="col-sm-12 col-md-4 col-lg-4">Meditation</div>
+            <div class="col-sm-12 col-md-4 col-lg-4">Therapists Near You</div>
+            <div class="col-sm-12 col-md-4 col-lg-4">Music</div>
+        </div>
+</div>
+</body>
 {% endblock %}
