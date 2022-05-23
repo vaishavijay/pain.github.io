@@ -114,19 +114,21 @@ def gmap():
 def burnbook():
     return render_template("burnbook.html")
 
+@app.route('/draw')
+def draw():
+    return render_template("draw.html")
 
 @app.route('/api')
 def api():
     import requests
     url = "https://mental-health-info-api.p.rapidapi.com/news/thetimes"
-
     headers = {
         "X-RapidAPI-Host": "mental-health-info-api.p.rapidapi.com",
         "X-RapidAPI-Key": "4ab4681ba9mshf17197c9d59be44p17d1edjsnabe7ccc22eb5"
     }
     response = requests.request("GET", url, headers=headers)
     output = json.loads(response.text)
-    print(response.text)
+    #print(response.text)
     return render_template("api.html", Z=output)
 
 
