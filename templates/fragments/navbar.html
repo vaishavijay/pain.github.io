@@ -63,12 +63,6 @@
         background-color: #3e8e41;
     }
 
-    {#.dropdown-menu2:hover .menu-content {#}
-    {#    display: block;#}
-    {#}#}
-    {#.dropdown-menu2:hover .menu-btn {#}
-    {#    background-color: #3e8e41;#}
-    {#}#}
 </style>
 
 <nav class="navbar navbar-expand-lg text-navbar-dark-color bg-navbar-light-color">
@@ -87,17 +81,11 @@
                 <a class="nav-link" href="{{ url_for('game1') }}">Snake Game</a>
                 <a class="nav-link" href="{{ url_for('game2') }}">Flappy</a>
             </div>
-{# ! DO NOT DELETE BELOW COMMENTS #}
-{#        <div class="dropdown-menu2">#}
-{#                <a class="menu-btn">Notes</a>#}
-{#            <div class="menu-content">#}
-{#                <a class="nav-link" href="{{ url_for('notes.notes') }}">Journal</a>#}
-{#                <a class="nav-link" href="{{ url_for('burnbook') }}">Burn Book</a>#}
-                {#            </div>#}
-
         </div>
         <a class="nav-link" href="{{ url_for('music') }}">Music</a>
         <a class="nav-link" href="{{ url_for('api') }}">Info</a>
+        <a class="nav-link" href="{{ url_for('draw') }}">Draw</a>
+
 
 
         {#    THE BELOW TWO LINES ARE TEMPORARY UNTIL THE DROPDOWN WORKS#}
