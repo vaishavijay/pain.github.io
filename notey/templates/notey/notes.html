@@ -9,8 +9,24 @@
     <header class="pb-3 mb-4 border-bottom border-primary text-dark">
         <span class="fs-4">Vent Journal</span>
     </header>
-    <p style="position: absolute; width: 500px; left: 310px; top: 300px;">[Users can vent out any feelings from everyday life whenever and wherever they feel like it. All information will be saved and users can be ensured that their information is private and secured as soon as they login.]</p>
+    <p style="position: absolute; width: 600px; left: 310px; top: 200px;">[Users can vent out any feelings from everyday life whenever and wherever they feel like it. All information will be saved and users can be ensured that their information is private and secured as soon as they login.]</p>
+
 </div>
+    <form style="position: absolute; left: 300px; top: 300px;" method="POST" ID="create" action={{url_for('notes.create')}}>
+        <table class="table">
+            <thead>
+            <tr>
+                <th><label for="notes">Create a new note:</label></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td><textarea style="width: 600px;" rows = "20" cols = "100%" name = "notes" id="notes" required></textarea></td>
+                <td><input style="position: absolute; left: 620px; top: 100px;" type="submit" value="Add" ></td>
+            </tr>
+            </tbody>
+        </table>
+    </form>
 
 <div style="position: absolute;width: 775px;height: 780px; top: 160px; left: 1000px;" class="container py-4 text-light bg-success">
     <div class="container bg-secondary py-4">
@@ -18,21 +34,7 @@
             <h2>Notes for {{ user.name }}</h2>
             <hr>
             <!--Notes input form, textarea supports multiple lines of input  -->
-            <form method="POST" ID="create" action={{url_for('notes.create')}}>
-                <table class="table">
-                    <thead>
-                    <tr>
-                        <th><label for="notes">Create a new note:</label></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td><textarea style="width: 600px;" rows = "5" cols = "100%" name = "notes" id="notes" required></textarea></td>
-                        <td><input type="submit" value="Add" ></td>
-                    </tr>
-                    </tbody>
-                </table>
-            </form>
+
             <hr>
             <!--Notes output area, Jinja lines iterate through notes,
                 note.note is html converted from markdown -->
