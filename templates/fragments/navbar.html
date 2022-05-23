@@ -4,6 +4,13 @@
         font-weight: bolder;
         border: none;
     }
+
+    .menu-btn1 {
+        color: #FFFFFF;
+        font-weight: bolder;
+        border: none;
+    }
+
     .dropdown-menu {
         position: relative;
         display: inline-block;
@@ -60,14 +67,14 @@
 <nav class="navbar navbar-expand-lg text-navbar-dark-color bg-navbar-light-color">
     <div class="container-fluid">
         <div class="btn-group">
-            <a class="navbar-brand" href="{{ url_for('index') }}">Team Pain</a>
+            <img src="{{ url_for('static', filename='assets/vintage-illustration-of-a-brain.jpg') }}" width="50" height="50" class="d-inline-block align-center" alt="">
+            <a class="navbar-brand" href="{{ url_for('index') }}">MyMind</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
         </div>
-
         <div class="dropdown-menu1">
-            <a class="menu-btn">Games</a>
+                <a class="menu-btn1">Games</a>
             <div class="menu-content">
                 <a class="nav-link" href="{{ url_for('games') }}">Avoid the Blue Block</a>
                 <a class="nav-link" href="{{ url_for('game1') }}">Snake Game</a>
@@ -79,7 +86,7 @@
 {#            <div class="menu-content">#}
 {#                <a class="nav-link" href="{{ url_for('notes.notes') }}">Journal</a>#}
 {#                <a class="nav-link" href="{{ url_for('burnbook') }}">Burn Book</a>#}
-{#            </div>#}
+                {#            </div>#}
 
         </div>
         <a class="nav-link" href="{{ url_for('music') }}">Music</a>
@@ -88,8 +95,10 @@
         {#    THE BELOW TWO LINES ARE TEMPORARY UNTIL THE DROPDOWN WORKS#}
         <a class="nav-link" href="{{ url_for('notes.notes') }}">Journal</a>
         <a class="nav-link" href="{{ url_for('burnbook') }}">Burn Book</a>
+        <a class="nav-link" href="{{ url_for('meditate') }}">Meditation</a>
 
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
                 {% if current_user.is_authenticated %}
                 <a class="nav-link" href="{{ url_for('gmap') }}">Map</a>
