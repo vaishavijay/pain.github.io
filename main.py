@@ -114,6 +114,7 @@ def gmap():
 def burnbook():
     return render_template("burnbook.html")
 
+
 @app.route('/draw')
 def draw():
     return render_template("draw.html")
