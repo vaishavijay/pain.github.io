@@ -12,7 +12,9 @@ These object will be used throughout project.
 # Setup of key Flask object (app)
 app = Flask(__name__)
 dbURI = 'sqlite:///myDB.db'
+UPLOAD_FOLDER = 'static/uploads/'
 # Setup SQLAlchemy object and properties for the database (db)
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_DATABASE_URI'] = dbURI
 app.config['SECRET_KEY'] = 'SECRET_KEY'
