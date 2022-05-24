@@ -6,6 +6,7 @@ from sqlalchemy.exc import IntegrityError
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 
+
 ''' Tutorial: https://www.sqlalchemy.org/library.html#tutorials, try to get into Python shell and follow along '''
 
 
@@ -50,6 +51,46 @@ class Notes(db.Model):
             "userID": self.userID
         }
 
+class Art(db.Model):
+    __tablename__ = 'art'
+
+    # Define the Notes schema
+    id = db.Column(db.Integer, primary_key=True)
+    draw = db.Column(db.Text, unique=True, nullable=False)
+    mimetype = db.Column(db.Text, nullable=False)
+    # Define a relationship in Notes Schema to userID who originates the note, many-to-one (many notes to one user)
+    userID = db.Column(db.Integer, db.ForeignKey('users.userID'))
+
+    # Constructor of a Notes object, initializes of instance variables within object
+    def __init__(self, draw, userID):
+        self.draw = draw
+        self.userID = userID
+
+    # Returns a string representation of the Notes object, similar to java toString()
+    # returns string
+    def __repr__(self):
+        return "Art(" + str(self.id) + "," + self.draw + "," + str(self.userID) + ")"
+
+    # CRUD create, adds a new record to the Notes table
+    # returns the object added or None in case of an error
+    def create(self):
+        try:
+            # creates a Notes object from Notes(db.Model) class, passes initializers
+            db.session.add(self)  # add prepares to persist person object to Notes table
+            db.session.commit()  # SqlAlchemy "unit of work pattern" requires a manual commit
+            return self
+        except IntegrityError:
+            db.session.remove()
+            return None
+
+    # CRUD read, returns dictionary representation of Notes object
+    # returns dictionary
+    def read(self):
+        return {
+            "id": self.id,
+            "draw": self.draw,
+            "userID": self.userID
+        }
 
 # Define the Users table within the model
 # -- Object Relational Mapping (ORM) is the key concept of SQLAlchemy
@@ -67,6 +108,7 @@ class Users(UserMixin, db.Model):
     phone = db.Column(db.String(255), unique=False, nullable=False)
     # Defines a relationship between User record and Notes table, one-to-many (one user to many notes)
     notes = db.relationship("Notes", cascade='all, delete', backref='users', lazy=True)
+    art = db.relationship("Art", cascade='all, delete', backref='users', lazy=True)
 
     # constructor of a User object, initializes of instance variables within object
     def __init__(self, name, email, password, phone):
@@ -189,6 +231,10 @@ def model_driver():
     print("Table: " + Notes.__tablename__)
     print("Columns: ", Notes.__table__.columns.keys())
     print("---------------------------")
+    print("Table: " + Art.__tablename__)
+    print("Columns: ", Art.__table__.columns.keys())
+    print("---------------------------")
+
     print()
 
     users = Users.query
@@ -196,8 +242,11 @@ def model_driver():
         print("User" + "-" * 81)
         print(user.read())
         print("Notes" + "-" * 80)
+        print("Art" + "-" * 80)
         for note in user.notes:
             print(note.read())
+        for draw in user.art:
+            print(draw.read())
         print("-" * 85)
         print()
 

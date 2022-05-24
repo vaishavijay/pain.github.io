@@ -1,0 +1,148 @@
+{% extends "layout.html" %}
+
+    {% block title %}
+        <title>Drawing for {{ user.name }}</title>
+    {% endblock %}
+
+    {% block content %}
+        <div class="container py-4">
+            <header class="pb-3 mb-4 border-bottom border-primary text-dark">
+                <h2>{{ user.name }}'s Drawing</h2>
+            </header>
+            <p style="position: absolute; width: 600px; left: 310px; top: 200px;">Drawing can help reduce stress!</p>
+
+        </div>
+        <form style="position: absolute; left: 300px; top: 300px;" method="POST" ID="create" action={{url_for('art.create')}}>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th><label for="art">Create a new drawing:</label></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><<canvas id="theCanvas"></canvas>
+                        <div>
+                            <button class="button clearButton" id="clearButton">Clear</button>
+                        </div>
+                        <style>#theCanvas {
+                            height: 400px;
+                            width: 400px;
+                            background: white;
+                        }
+                        .clearButton {background-color: #b99f7a;} /* Tan */
+
+                        body {
+                            background: #eee;
+                        }</style>
+                        <script>const MAIN_MOUSE_BUTTON = 0;
+
+                        function prepareContext(canvasElement) {
+                            let dpr = window.devicePixelRatio || 1;
+                            let rect = canvasElement.getBoundingClientRect();
+                            canvasElement.width = rect.width * dpr;
+                            canvasElement.height = rect.height * dpr;
+
+                            let context = canvasElement.getContext("2d");
+                            context.scale(dpr, dpr);
+
+                            return context;
+                        }
+
+                        function setLineProperties(context) {
+                            context.lineWidth = 4;
+                            context.lineJoin = "round";
+                            context.lineCap = "round";
+                            return context;
+                        }
+
+                        let clearButton = document.getElementById("clearButton");
+                        let theCanvas = document.getElementById("theCanvas");
+                        let theContext = prepareContext(theCanvas);
+                        let shouldDraw = false;
+
+                        theCanvas.addEventListener("mousedown", start);
+                        theCanvas.addEventListener("mouseup", end);
+                        theCanvas.addEventListener("mousemove", move, false);
+
+                        clearButton.addEventListener("click", event => {
+                            clearCanvas(theContext);
+                        });
+
+
+                        function clearCanvas(context) {
+                            context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+                        }
+
+                        function start(event) {
+                            if (event.button === MAIN_MOUSE_BUTTON) {
+                                shouldDraw = true;
+                                setLineProperties(theContext);
+
+                                theContext.beginPath();
+
+                                let elementRect = event.target.getBoundingClientRect();
+                                theContext.moveTo(event.clientX - elementRect.left, event.clientY - elementRect.top);
+                            }
+                        }
+
+                        function end(event) {
+                            if (event.button === MAIN_MOUSE_BUTTON) {
+                                shouldDraw = false;
+                            }
+                        }
+
+                        function move(event) {
+                            if (shouldDraw) {
+                                let elementRect = event.target.getBoundingClientRect();
+                                theContext.lineTo(event.clientX - elementRect.left, event.clientY - elementRect.top);
+                                theContext.stroke()
+                            }
+                            document.getElementById('save').onclick = function () {
+                                window.location = document.getElementById("art").toDataURL('image/png');
+                            };
+                            async function downloadCanvas(el) {
+                                const imageURI = canvas.toDataURL("image/jpg");
+                                el.href = imageURI;
+                            };
+                        }</script>
+                    </body></td>
+{#
+                    <td><input style="position: absolute; left: 620px; top: 100px;" type="submit" value="Add" ></td>
+#}
+                </tr>
+                </tbody>
+            </table>
+        </form>
+
+{#
+        <div style="position: absolute;width: 775px;height: 780px; top: 160px; left: 1000px;" class="container py-4 text-light bg-success">
+            <div class="container bg-secondary py-4">
+                <div class="p-5 mb-4 bg-light text-dark rounded-3">
+                    <h2>Drawing for {{ user.name }}</h2>
+#}
+   {#                 <hr>
+                    <!--Notes input form, textarea supports multiple lines of input  -->
+
+                    <hr>
+                    <!--Notes output area, Jinja lines iterate through notes,
+                        note.note is html converted from markdown -->
+                    <div class="table-responsive">
+                        <table class="table">
+                            <tbody>
+                            {% for draw in art %}
+                                <tr>
+                                    <td>{{ draw.draw | safe }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+#}
+{#
+                </div>
+            </div>
+        </div>
+#}
+
+{% endblock %}
