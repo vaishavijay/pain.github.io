@@ -5,12 +5,14 @@ from __init__ import app, login_manager
 from cruddy.app_crud import app_crud
 from cruddy.app_crud_api import app_crud_api
 from notey.app_notes import app_notes
+from arty.app_art import app_art
 
 from cruddy.login import login, logout, signup
 
 app.register_blueprint(app_crud)
 app.register_blueprint(app_crud_api)
 app.register_blueprint(app_notes)
+app.register_blueprint(app_art)
 
 
 @app.route('/')
@@ -115,9 +117,9 @@ def burnbook():
     return render_template("burnbook.html")
 
 
-@app.route('/draw')
-def draw():
-    return render_template("draw.html")
+#@app.route('/art')
+#def art():
+#    return render_template("arty/templates/art.html")
 
 @app.route('/api')
 def api():
