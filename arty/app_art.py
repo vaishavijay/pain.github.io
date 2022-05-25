@@ -1,52 +1,82 @@
-import markdown
+import os
+from __init__ import app
 from flask import Blueprint, render_template, request, redirect, url_for
 from flask_login import login_required, current_user
+from werkzeug.utils import secure_filename
+
 from cruddy.query import user_by_id
-from cruddy.model import Art
 
 # blueprint defaults https://flask.palletsprojects.com/en/2.0.x/api/#blueprint-objects
 app_art = Blueprint('art', __name__,
-                      url_prefix='/art',
-                      template_folder='templates/arty/',
-                      static_folder='static',
-                      static_url_path='static')
+                        url_prefix='/art',
+                        template_folder='templates/arty/',
+                        static_folder='static',
+                        static_url_path='static')
+
+''' 
+Objective of the ideas started with this page is to manage uploading content to a Web Site
+Code provided allows user to upload Image into static/uploads folder 
+'''
+# ... An Image is often called a picture, it works with <image ...> tage in HTML
+# ... Supported types jpeg, gif, png, apng, svg, bmp, bmp ico, png ico.
+
+'''
+Hack #1 add additional content
+'''
+# Additional Content
+# ... Video, Comma Seperated Values (CSV), Code File (py,java)
+# ... One or more uploading capabilities can be provided to support needs of your project
+
+'''
+Hack #2 add additional description and capabilities
+'''
+# Establish a database record that keeps track of content and establishes meta data
+# ... user who uploaded
+# ... description
+# Combine Note and Image upload into single activie
+# ... description of Note is Markdown text
+# ... try using uploaded image in notes
+# ... think about easier markdown UI for user of Note and Images
+
+'''
+Hack #3 establish a strategy to manage data being stored through Amazon S3 bucket
+'''
+# AWS S3 Object Container is a system used to manage content
+# ... S3 Bucket Concept: https://www.youtube.com/watch?v=-VVC7uTNJX8
 
 
-@app_art.route('/art')
+# A global variable is used to provide feedback for session to users, but is considered short term solution
+files_uploaded = []
+
+
+# Page to upload content page
+@app_art.route('/')
 @login_required
 def art():
-    # defaults are empty, in case user data not found
-    user = ""
-    list_art = []
-
-    # grab user database object based on current login
+    # grab user object (uo) based on current login
     uo = user_by_id(current_user.userID)
-
-    # if user object is found
-    if uo is not None:
-        user = uo.read()  # extract user record (Dictionary)
-        for draw in uo.notes:  # loop through each user note
-            draw = draw.read()  # extract note record (Dictionary)
-            draw['note'] = markdown.markdown(draw['note'])  # convert markdown to html
-            list_art.append(draw)  # prepare note list for render_template
-        if list_art is not None:
-            list_art.reverse()
-    # render user and note data in reverse chronological order
-    return render_template('art.html', user=user, art=list_art)
+    user = uo.read()  # extract user record (Dictionary)
+    # load content page
+    return render_template('art.html', user=user, files=files_uploaded)
 
 
 # Notes create/add
-@app_art.route('/create/', methods=["POST"])
+@app_art.route('/upload/', methods=["POST"])
 @login_required
-def create():
+def upload():
+    try:
+        # grab file object (fo) from user input
+        # The fo variable holds the submitted file object. This is an instance of class FileStorage, which Flask imports from Werkzeug.
+        fo = request.files['filename']
+        # save file to location defined in __init__.py
+        # ... os.path uses os specific pathing for web server
+        # ... secure_filename checks for integrity of name for operating system. Pass it a filename and it will return a secure version of it.
 
-    """gets data from form and add to Notes table"""
-    if request.form:
-        # construct a Notes object
-        draw_object = Art(
-            request.form.get("art"), current_user.userID
-        )
-        # create a record in the Notes table with the Notes object
-        draw_object.create()
+        fo.save(os.path.join(app.config['UPLOAD_FOLDER'], secure_filename(fo.filename)))
+        # ... add to files_uploaded to give feedback of success on HTML page
+        files_uploaded.insert(0, url_for('static', filename='uploads/' + fo.filename))
+    except:
+        # errors handled, but specific errors are not messaged to user
+        pass
+    # reload content page
     return redirect(url_for('art.art'))
-

@@ -5,6 +5,18 @@
     {% endblock %}
 
     {% block content %}
+        <style>
+            #theCanvas {
+                height: 400px;
+                width: 400px;
+                background: white;
+            }
+            .clearButton {background-color: #b99f7a;} /* Tan */
+
+            body {
+                background: #eee;
+            }
+        </style>
         <div class="container py-4">
             <header class="pb-3 mb-4 border-bottom border-primary text-dark">
                 <h2>{{ user.name }}'s Drawing</h2>
@@ -12,7 +24,7 @@
             <p style="position: absolute; width: 600px; left: 310px; top: 200px;">Drawing can help reduce stress!</p>
 
         </div>
-        <form style="position: absolute; left: 300px; top: 300px;" method="POST" ID="create" action={{url_for('art.create')}}>
+        <form style="position: absolute; left: 300px; top: 300px;" id="upload" enctype="multipart/form-data" action = "{{url_for('art.upload')}}" method = "POST">
             <table class="table">
                 <thead>
                 <tr>
@@ -21,99 +33,109 @@
                 </thead>
                 <tbody>
                 <tr>
-                    <td><<canvas id="theCanvas"></canvas>
+                    <td>
+                        <canvas id="theCanvas"></canvas>
                         <div>
                             <button class="button clearButton" id="clearButton">Clear</button>
+                            <button><a href="#" onclick="prepDownload(this, document.getElementById('theCanvas'), 'imgName.png')">Save your drawing</a></button>
+                            <input type="file" id="filename" name="filename" />
+                            <input type="submit" value="Upload" >
                         </div>
-                        <style>#theCanvas {
-                            height: 400px;
-                            width: 400px;
-                            background: white;
-                        }
-                        .clearButton {background-color: #b99f7a;} /* Tan */
-
-                        body {
-                            background: #eee;
-                        }</style>
-                        <script>const MAIN_MOUSE_BUTTON = 0;
-
-                        function prepareContext(canvasElement) {
-                            let dpr = window.devicePixelRatio || 1;
-                            let rect = canvasElement.getBoundingClientRect();
-                            canvasElement.width = rect.width * dpr;
-                            canvasElement.height = rect.height * dpr;
-
-                            let context = canvasElement.getContext("2d");
-                            context.scale(dpr, dpr);
-
-                            return context;
-                        }
-
-                        function setLineProperties(context) {
-                            context.lineWidth = 4;
-                            context.lineJoin = "round";
-                            context.lineCap = "round";
-                            return context;
-                        }
-
-                        let clearButton = document.getElementById("clearButton");
-                        let theCanvas = document.getElementById("theCanvas");
-                        let theContext = prepareContext(theCanvas);
-                        let shouldDraw = false;
-
-                        theCanvas.addEventListener("mousedown", start);
-                        theCanvas.addEventListener("mouseup", end);
-                        theCanvas.addEventListener("mousemove", move, false);
-
-                        clearButton.addEventListener("click", event => {
-                            clearCanvas(theContext);
-                        });
-
-
-                        function clearCanvas(context) {
-                            context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-                        }
-
-                        function start(event) {
-                            if (event.button === MAIN_MOUSE_BUTTON) {
-                                shouldDraw = true;
-                                setLineProperties(theContext);
-
-                                theContext.beginPath();
-
-                                let elementRect = event.target.getBoundingClientRect();
-                                theContext.moveTo(event.clientX - elementRect.left, event.clientY - elementRect.top);
-                            }
-                        }
-
-                        function end(event) {
-                            if (event.button === MAIN_MOUSE_BUTTON) {
-                                shouldDraw = false;
-                            }
-                        }
-
-                        function move(event) {
-                            if (shouldDraw) {
-                                let elementRect = event.target.getBoundingClientRect();
-                                theContext.lineTo(event.clientX - elementRect.left, event.clientY - elementRect.top);
-                                theContext.stroke()
-                            }
-                            document.getElementById('save').onclick = function () {
-                                window.location = document.getElementById("art").toDataURL('image/png');
-                            };
-                            async function downloadCanvas(el) {
-                                const imageURI = canvas.toDataURL("image/jpg");
-                                el.href = imageURI;
-                            };
-                        }</script>
-                    </body></td>
-{#
-                    <td><input style="position: absolute; left: 620px; top: 100px;" type="submit" value="Add" ></td>
-#}
+                    </td>
                 </tr>
                 </tbody>
             </table>
         </form>
+
+        <div style="position: absolute;width: 775px;height: 780px; top: 160px; left: 1000px;" class="container py-4 text-light bg-success">
+        <div class="table-responsive">
+            <table class="table">
+                <tbody>
+                {% for file in files %}
+                    <tr>
+                        <td><image src="{{ file }}" width="1000px"></image></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        </div>
+
+        <script>
+            const MAIN_MOUSE_BUTTON = 0;
+            function prepDownload(a, canvas, name) {
+                a.download = name
+                a.href = canvas.toDataURL()
+            }
+            function prepareContext(canvasElement) {
+                let dpr = window.devicePixelRatio || 1;
+                let rect = canvasElement.getBoundingClientRect();
+                canvasElement.width = rect.width * dpr;
+                canvasElement.height = rect.height * dpr;
+
+                let context = canvasElement.getContext("2d");
+                context.scale(dpr, dpr);
+
+                return context;
+            }
+
+            function setLineProperties(context) {
+                context.lineWidth = 4;
+                context.lineJoin = "round";
+                context.lineCap = "round";
+                return context;
+            }
+
+            let clearButton = document.getElementById("clearButton");
+            let theCanvas = document.getElementById("theCanvas");
+            let theContext = prepareContext(theCanvas);
+            let shouldDraw = false;
+
+            theCanvas.addEventListener("mousedown", start);
+            theCanvas.addEventListener("mouseup", end);
+            theCanvas.addEventListener("mousemove", move, false);
+
+            clearButton.addEventListener("click", event => {
+                clearCanvas(theContext);
+            });
+
+
+            function clearCanvas(context) {
+                context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+            }
+
+            function start(event) {
+                if (event.button === MAIN_MOUSE_BUTTON) {
+                    shouldDraw = true;
+                    setLineProperties(theContext);
+
+                    theContext.beginPath();
+
+                    let elementRect = event.target.getBoundingClientRect();
+                    theContext.moveTo(event.clientX - elementRect.left, event.clientY - elementRect.top);
+                }
+            }
+
+            function end(event) {
+                if (event.button === MAIN_MOUSE_BUTTON) {
+                    shouldDraw = false;
+                }
+            }
+
+            function move(event) {
+                if (shouldDraw) {
+                    let elementRect = event.target.getBoundingClientRect();
+                    theContext.lineTo(event.clientX - elementRect.left, event.clientY - elementRect.top);
+                    theContext.stroke()
+                }
+                document.getElementById('save').onclick = function () {
+                    window.location = document.getElementById("art").toDataURL('image/png');
+                };
+                async function downloadCanvas(el) {
+                    const imageURI = canvas.toDataURL("image/jpg");
+                    el.href = imageURI;
+                };
+            }</script>
 
 {#
         <div style="position: absolute;width: 775px;height: 780px; top: 160px; left: 1000px;" class="container py-4 text-light bg-success">
