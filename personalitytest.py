@@ -1,107 +1,111 @@
 import sys
 
 
+def display(personality_type):
+    print(f"Your personality type is -> {personality_type}")
+
+
 def run():
     questions: list = [
         """
 Question 1:
-a.expend energy, enjoy groups or
-b.conserve energy, enjoy one-on-one
+a.You enjoy being in groups
+b.You enjoy one-on-one interactions
 """,
         """
 Question 2:
-a.more outgoing, think out loud or
-b.more reserved, think to yourself
+a.You are more outgoing and think out loud
+b.You are more reserved and think to yourself
 """,
         """
 Question 3:
-a.seek many tasks, public activities, interaction with others
-b.seek private, solitary activities with quiet to concentrate
+a.You seek many tasks, public activities, interaction with others
+b.You seek private, solitary activities with quiet to concentrate
 """,
         """
 Question 4:
-a.external, communicative, express yourself or
-b.internal, reticent, keep to yourself
+a.You are more communicative and prefer express yourself
+b.You are prefer keep to yourself
 """,
         """
 Question 5:
-a.active, initiate or
-b.reflective, deliberate
+a.You are more active and like to initiate things
+b.You are more reflective and like deliberate things
 """,
         """
 Question 6:
-a.interpret literally or
-b.look for meaning and possibilities
+a.You interpret things literally
+b.You look for meaning and possibilities outside of the box
 """,
         """
 Question 7:
-a.practical, realistic, experiential or
-b.imaginative, innovative, theoretical
+a.You are more practical, realistic, and experiential 
+b.You are more imaginative, innovative, and theoretical
 """,
         """
 Question 8:
-a.standard, usual, conventional or
-b.different, novel, unique
+a.You like things more standard, usual, and conventional
+b.You like things more different, novel, and unique
 """,
         """
 Question 9:
-a.focus on here-and-now or
-b.look to the future, global perspective, “big picture”
+a.You focus on here-and-now
+b.You look to the future, global perspective, and focus on the “big picture”
 """,
         """
 Question 10:
-a.facts, things, “what is” or
-b.ideas, dreams, “what could be,” philosophical
+a.You prefer facts, things, and “what is” 
+b.You prefer ideas, dreams, “what could be,” and the philosophical
 """,
         """
 Question 11:
-a.logical, thinking, questioning or
-b.empathetic, feeling, accommodating
+a.You are more logical, thinking, and questioning 
+b.You are more empathetic, feeling, and accommodating
 """,
         """
 Question 12:
-a. candid, straight forward, frank or
-b. tactful, kind, encouraging
+a.You are candid, straight forward, and frank 
+b.You tactful, kind, and encouraging
 """,
         """
 Question 13:
-a.firm, tend to criticize, hold the line or
-b.gentle, tend to appreciate, conciliate
+a.You are more firm, tend to criticize, and tend to hold the line 
+b.You are more gentle, tend to appreciate, and conciliated
 """,
         """
 Question 14:
-a.tough-minded, just or
-b.tender-hearted, merciful
+a.You are more tough-minded and just 
+b.You are more tender-hearted and merciful
 """,
         """
 Question 15:
-a.matter of fact, issue-oriented or
-b.sensitive, people-oriented, compassionate
+a.You are matter of fact and issue-oriented 
+b.You are sensitive, people-oriented, and compassionate
 """,
         """
 Question 16:
-a. organized, orderly or
-b. flexible, adaptable
+a.You are organized
+b.You are flexible
 """,
         """
 Question 17:
-a. plan, schedule or
-b. unplanned, spontaneous
+a.You like to plan and be scheduled
+b.You don't like to plan and prefer being spontaneous
 """,
         """
 Question 18:
-a.regulated, structured or
-b.easygoing, “live” and “let live”
+a.You like a structured lifestyle
+b.You like an easygoing lifestyle
 """,
         """
 Question 19:
-a.preparation, plan ahead or
-b.go with the flow, adapt as you go
+a.You prefer to plan ahead 
+b.You prefer to go with the flow
 """,
         """
 Question 20:
-a.control, govern or
-b.latitude, freedom
+a.You prefer to be controlled and governed
+b.You prefer to be freedom
 """
     ]
 
@@ -155,10 +159,28 @@ b.latitude, freedom
     display(personality_dichotomy)
 
 
-def display(personality_type):
-    print(f"Your personality type is -> {personality_type}")
-
-
 def exit_application():
     print("Exiting application...")
     sys.exit(0)
+
+
+def main():
+    user_input = input("""
+    Welcome to the Meyers Briggs Personality Test
+    Press 1  to take test
+    Press 2 to exit application -> """)
+    try:
+        if not (user_input == "1" or user_input == "2"):
+            raise ValueError("Invalid input")
+    except ValueError as error:
+        print(error)
+    else:
+        switcher = {
+            "1": run,
+            "2": exit_application
+        }
+        return switcher.get(user_input)()
+
+
+if __name__ == "__main__":
+    main()
