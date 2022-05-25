@@ -104,6 +104,11 @@ def game2():
     return render_template("game2.html")
 
 
+@app.route('/personalitytest')
+def personalitytest():
+    return render_template("personalitytest.html")
+
+
 @app.route('/authorize')
 def authorize():
     return render_template("authorize.html")
