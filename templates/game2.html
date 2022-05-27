@@ -1,128 +1,259 @@
 {% extends "layout.html" %}
 
 {% block content %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+<div class="background"></div>
+<img class="bird" src="logo.png" alt="bird-img">
+<div class="message">
+    Press Enter To Start Game
+</div>
+<div class="score">
+    <span class="score_title"></span>
+    <span class="score_val"></span>
+</div>
+<script src="gfg.js"></script>
+</body>
+
+</html>
+
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        height: 100vh;
+        width: 100vw;
+    }
+
+    .background {
+        height: 100vh;
+        width: 100vw;
+        background-color: skyblue;
+    }
+
+    .bird {
+        height: 100px;
+        width: 160px;
+        position: fixed;
+        top: 40vh;
+        left: 30vw;
+        z-index: 100;
+    }
+
+    .pipe_sprite {
+        position: fixed;
+        top: 40vh;
+        left: 100vw;
+        height: 70vh;
+        width: 6vw;
+        background-color: green;
+    }
+
+    .message {
+        position: fixed;
+        z-index: 10;
+        height: 10vh;
+        font-size: 10vh;
+        font-weight: 100;
+        color: black;
+        top: 12vh;
+        left: 20vw;
+        text-align: center;
+    }
+
+    .score {
+        position: fixed;
+        z-index: 10;
+        height: 10vh;
+        font-size: 10vh;
+        font-weight: 100;
+        color: goldenrod;
+        top: 0;
+        left: 0;
+    }
+
+    .score_val {
+        color: gold;
+    }
+
+</style>
 
 <script>
-    var myGamePiece;
-    var myObstacles = [];
-    var myScore;
+    // Background scrolling speed
+    let move_speed = 3;
 
-    function startGame() {
-        myGamePiece = new component(30, 30, "red", 10, 120);
-        myGamePiece.gravity = 0.05;
-        myScore = new component("30px", "Consolas", "black", 280, 40, "text");
-        myGameArea.start();
-    }
+    // Gravity constant value
+    let gravity = 0.5;
 
-    var myGameArea = {
-        canvas : document.createElement("canvas"),
-        start : function() {
-            this.canvas.width = 480;
-            this.canvas.height = 270;
-            this.context = this.canvas.getContext("2d");
-            document.body.insertBefore(this.canvas, document.body.childNodes[0]);
-            this.frameNo = 0;
-            this.interval = setInterval(updateGameArea, 20);
-        },
-        clear : function() {
-            this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        }
-    }
+    // Getting reference to the bird element
+    let bird = document.querySelector('.bird');
 
-    function component(width, height, color, x, y, type) {
-        this.type = type;
-        this.score = 0;
-        this.width = width;
-        this.height = height;
-        this.speedX = 0;
-        this.speedY = 0;
-        this.x = x;
-        this.y = y;
-        this.gravity = 0;
-        this.gravitySpeed = 0;
-        this.update = function() {
-            ctx = myGameArea.context;
-            if (this.type == "text") {
-                ctx.font = this.width + " " + this.height;
-                ctx.fillStyle = color;
-                ctx.fillText(this.text, this.x, this.y);
-            } else {
-                ctx.fillStyle = color;
-                ctx.fillRect(this.x, this.y, this.width, this.height);
-            }
-        }
-        this.newPos = function() {
-            this.gravitySpeed += this.gravity;
-            this.x += this.speedX;
-            this.y += this.speedY + this.gravitySpeed;
-            this.hitBottom();
-        }
-        this.hitBottom = function() {
-            var rockbottom = myGameArea.canvas.height - this.height;
-            if (this.y > rockbottom) {
-                this.y = rockbottom;
-                this.gravitySpeed = 0;
-            }
-        }
-        this.crashWith = function(otherobj) {
-            var myleft = this.x;
-            var myright = this.x + (this.width);
-            var mytop = this.y;
-            var mybottom = this.y + (this.height);
-            var otherleft = otherobj.x;
-            var otherright = otherobj.x + (otherobj.width);
-            var othertop = otherobj.y;
-            var otherbottom = otherobj.y + (otherobj.height);
-            var crash = true;
-            if ((mybottom < othertop) || (mytop > otherbottom) || (myright < otherleft) || (myleft > otherright)) {
-                crash = false;
-            }
-            return crash;
-        }
-    }
+    // Getting bird element properties
+    let bird_props = bird.getBoundingClientRect();
+    let background =
+        document.querySelector('.background')
+            .getBoundingClientRect();
 
-    function updateGameArea() {
-        var x, height, gap, minHeight, maxHeight, minGap, maxGap;
-        for (i = 0; i < myObstacles.length; i += 1) {
-            if (myGamePiece.crashWith(myObstacles[i])) {
+    // Getting reference to the score element
+    let score_val =
+        document.querySelector('.score_val');
+    let message =
+        document.querySelector('.message');
+    let score_title =
+        document.querySelector('.score_title');
+
+    // Setting initial game state to start
+    let game_state = 'Start';
+
+    // Add an eventlistener for key presses
+    document.addEventListener('keydown', (e) => {
+
+// Start the game if enter key is pressed
+        if (e.key == 'Enter' &&
+            game_state != 'Play') {
+            document.querySelectorAll('.pipe_sprite')
+                .forEach((e) => {
+                    e.remove();
+                });
+            bird.style.top = '40vh';
+            game_state = 'Play';
+            message.innerHTML = '';
+            score_title.innerHTML = 'Score : ';
+            score_val.innerHTML = '0';
+            play();
+        }
+    });
+    function play() {
+        function move() {
+
+            // Detect if game has ended
+            if (game_state != 'Play') return;
+
+            // Getting reference to all the pipe elements
+            let pipe_sprite = document.querySelectorAll('.pipe_sprite');
+            pipe_sprite.forEach((element) => {
+
+                let pipe_sprite_props = element.getBoundingClientRect();
+                bird_props = bird.getBoundingClientRect();
+
+                // Delete the pipes if they have moved out
+                // of the screen hence saving memory
+                if (pipe_sprite_props.right <= 0) {
+                    element.remove();
+                } else {
+                    // Collision detection with bird and pipes
+                    if (
+                        bird_props.left < pipe_sprite_props.left +
+                        pipe_sprite_props.width &&
+                        bird_props.left +
+                        bird_props.width > pipe_sprite_props.left &&
+                        bird_props.top < pipe_sprite_props.top +
+                        pipe_sprite_props.height &&
+                        bird_props.top +
+                        bird_props.height > pipe_sprite_props.top
+                    ) {
+
+                        // Change game state and end the game
+                        // if collision occurs
+                        game_state = 'End';
+                        message.innerHTML = 'Press Enter To Restart';
+                        message.style.left = '28vw';
+                        return;
+                    } else {
+                        // Increase the score if player
+                        // has the successfully dodged the
+                        if (
+                            pipe_sprite_props.right < bird_props.left &&
+                            pipe_sprite_props.right +
+                            move_speed >= bird_props.left &&
+                            element.increase_score == '1'
+                        ) {
+                            score_val.innerHTML = +score_val.innerHTML + 1;
+                        }
+                        element.style.left =
+                            pipe_sprite_props.left - move_speed + 'px';
+                    }
+                }
+            });
+
+            requestAnimationFrame(move);
+        }
+        requestAnimationFrame(move);
+
+        let bird_dy = 0;
+        function apply_gravity() {
+            if (game_state != 'Play') return;
+            bird_dy = bird_dy + gravity;
+            document.addEventListener('keydown', (e) => {
+                if (e.key == 'ArrowUp' || e.key == ' ') {
+                    bird_dy = -7.6;
+                }
+            });
+
+            // Collision detection with bird and
+            // window top and bottom
+
+            if (bird_props.top <= 0 ||
+                bird_props.bottom >= background.bottom) {
+                game_state = 'End';
+                message.innerHTML = 'Press Enter To Restart';
+                message.style.left = '28vw';
                 return;
             }
+            bird.style.top = bird_props.top + bird_dy + 'px';
+            bird_props = bird.getBoundingClientRect();
+            requestAnimationFrame(apply_gravity);
         }
-        myGameArea.clear();
-        myGameArea.frameNo += 1;
-        if (myGameArea.frameNo == 1 || everyinterval(150)) {
-            x = myGameArea.canvas.width;
-            minHeight = 20;
-            maxHeight = 200;
-            height = Math.floor(Math.random()*(maxHeight-minHeight+1)+minHeight);
-            minGap = 50;
-            maxGap = 200;
-            gap = Math.floor(Math.random()*(maxGap-minGap+1)+minGap);
-            myObstacles.push(new component(10, height, "green", x, 0));
-            myObstacles.push(new component(10, x - height - gap, "green", x, height + gap));
+        requestAnimationFrame(apply_gravity);
+
+        let pipe_seperation = 0;
+
+// Constant value for the gap between two pipes
+        let pipe_gap = 35;
+        function create_pipe() {
+            if (game_state != 'Play') return;
+
+            // Create another set of pipes
+            // if distance between two pipe has exceeded
+            // a predefined value
+            if (pipe_seperation > 115) {
+                pipe_seperation = 0
+
+                // Calculate random position of pipes on y axis
+                let pipe_posi = Math.floor(Math.random() * 43) + 8;
+                let pipe_sprite_inv = document.createElement('div');
+                pipe_sprite_inv.className = 'pipe_sprite';
+                pipe_sprite_inv.style.top = pipe_posi - 70 + 'vh';
+                pipe_sprite_inv.style.left = '100vw';
+
+                // Append the created pipe element in DOM
+                document.body.appendChild(pipe_sprite_inv);
+                let pipe_sprite = document.createElement('div');
+                pipe_sprite.className = 'pipe_sprite';
+                pipe_sprite.style.top = pipe_posi + pipe_gap + 'vh';
+                pipe_sprite.style.left = '100vw';
+                pipe_sprite.increase_score = '1';
+
+                // Append the created pipe element in DOM
+                document.body.appendChild(pipe_sprite);
+            }
+            pipe_seperation++;
+            requestAnimationFrame(create_pipe);
         }
-        for (i = 0; i < myObstacles.length; i += 1) {
-            myObstacles[i].x += -1;
-            myObstacles[i].update();
-        }
-        myScore.text="SCORE: " + myGameArea.frameNo;
-        myScore.update();
-        myGamePiece.newPos();
-        myGamePiece.update();
+        requestAnimationFrame(create_pipe);
     }
 
-    function everyinterval(n) {
-        if ((myGameArea.frameNo / n) % 1 == 0) {return true;}
-        return false;
-    }
-
-    function accelerate(n) {
-        myGamePiece.gravity = n;
-    }
 </script>
-<br>
-<button onmousedown="accelerate(-0.2)" onmouseup="accelerate(0.05)">Jump</button>
-<body onload="startGame()">
 
-</>
 {% endblock %}
