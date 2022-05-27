@@ -51,46 +51,42 @@ class Notes(db.Model):
             "userID": self.userID
         }
 
-class Art(db.Model):
-    __tablename__ = 'art'
 
-    # Define the Notes schema
-    id = db.Column(db.Integer, primary_key=True)
-    draw = db.Column(db.Text, unique=True, nullable=False)
-    mimetype = db.Column(db.Text, nullable=False)
-    # Define a relationship in Notes Schema to userID who originates the note, many-to-one (many notes to one user)
-    userID = db.Column(db.Integer, db.ForeignKey('users.userID'))
-
-    # Constructor of a Notes object, initializes of instance variables within object
-    def __init__(self, draw, userID):
-        self.draw = draw
-        self.userID = userID
-
-    # Returns a string representation of the Notes object, similar to java toString()
-    # returns string
-    def __repr__(self):
-        return "Art(" + str(self.id) + "," + self.draw + "," + str(self.userID) + ")"
-
-    # CRUD create, adds a new record to the Notes table
-    # returns the object added or None in case of an error
-    def create(self):
+def model_tester():
+    print("--------------------------")
+    print("Seed Data for Table: users")
+    print("--------------------------")
+    db.create_all()
+    """Tester data for table"""
+    u1 = Users(name='Thomas Edison', email='tedison@example.com', password='123toby', phone="1111111111")
+    u2 = Users(name='Nicholas Tesla', email='ntesla@example.com', password='123niko', phone="1111112222")
+    u3 = Users(name='Alexander Graham Bell', email='agbell@example.com', password='123lex', phone="1111113333")
+    u4 = Users(name='Eli Whitney', email='eliw@example.com', password='123whit', phone="1111114444")
+    u5 = Users(name='John Mortensen', email='jmort1021@gmail.com', password='123qwerty', phone="8587754956")
+    u6 = Users(name='John Mortensen', email='jmort1021@yahoo.com', password='123qwerty', phone="8587754956")
+    # U7 intended to fail as duplicate key
+    u7 = Users(name='John Mortensen', email='jmort1021@yahoo.com', password='123qwerty', phone="8586791294")
+    table = [u1, u2, u3, u4, u5, u6, u7]
+    for row in table:
         try:
-            # creates a Notes object from Notes(db.Model) class, passes initializers
-            db.session.add(self)  # add prepares to persist person object to Notes table
-            db.session.commit()  # SqlAlchemy "unit of work pattern" requires a manual commit
-            return self
+            db.session.add(row)
+            db.session.commit()
         except IntegrityError:
             db.session.remove()
-            return None
+            print(f"Records exist, duplicate email, or error: {row.email}")
 
-    # CRUD read, returns dictionary representation of Notes object
-    # returns dictionary
-    def read(self):
-        return {
-            "id": self.id,
-            "draw": self.draw,
-            "userID": self.userID
-        }
+
+def model_printer():
+    print("------------")
+    print("Table: users with SQL query")
+    print("------------")
+    result = db.session.execute('select * from users')
+    print(result.keys())
+    for row in result:
+        print(row)
+
+
+
 
 # Define the Users table within the model
 # -- Object Relational Mapping (ORM) is the key concept of SQLAlchemy
@@ -108,7 +104,6 @@ class Users(UserMixin, db.Model):
     phone = db.Column(db.String(255), unique=False, nullable=False)
     # Defines a relationship between User record and Notes table, one-to-many (one user to many notes)
     notes = db.relationship("Notes", cascade='all, delete', backref='users', lazy=True)
-    art = db.relationship("Art", cascade='all, delete', backref='users', lazy=True)
 
     # constructor of a User object, initializes of instance variables within object
     def __init__(self, name, email, password, phone):
@@ -231,10 +226,6 @@ def model_driver():
     print("Table: " + Notes.__tablename__)
     print("Columns: ", Notes.__table__.columns.keys())
     print("---------------------------")
-    print("Table: " + Art.__tablename__)
-    print("Columns: ", Art.__table__.columns.keys())
-    print("---------------------------")
-
     print()
 
     users = Users.query
@@ -242,14 +233,12 @@ def model_driver():
         print("User" + "-" * 81)
         print(user.read())
         print("Notes" + "-" * 80)
-        print("Art" + "-" * 80)
         for note in user.notes:
             print(note.read())
-        for draw in user.art:
-            print(draw.read())
         print("-" * 85)
         print()
 
 
 if __name__ == "__main__":
-    model_driver()
+    model_tester()  # builds model of Users
+    model_printer()
