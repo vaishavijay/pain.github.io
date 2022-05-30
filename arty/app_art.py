@@ -49,6 +49,22 @@ Hack #3 establish a strategy to manage data being stored through Amazon S3 bucke
 files_uploaded = []
 
 
+def upload_save(file_object):
+    # set path to location defined in __init__.py
+    path = app.config['UPLOAD_FOLDER2']
+    if not os.path.exists(path):
+        # Create a new directory because it does not exist
+        os.makedirs(path)
+
+    # secure_filename checks for integrity of filename, avoids hacking
+    filename = secure_filename(file_object.filename)
+    # os.path.join adds path for uploads
+    upload_location = os.path.join(path, filename)
+    # save file object to upload location
+    file_object.save(upload_location)
+    return filename
+
+
 # Page to upload content page
 @app_art.route('/')
 @login_required
@@ -60,21 +76,28 @@ def art():
     return render_template('art.html', user=user, files=files_uploaded)
 
 
+@app_art.route('/delete/', methods=["POST"])
+def delete():
+    if request.form:
+        fo = request.files['filename']
+        if os.path.exists(os.path.join(url_for('static', filename='drawing/' + fo.filename))):
+            os.remove(os.path.join(url_for('static', filename='drawing/' + fo.filename)))
+
+    return redirect(url_for('art.art'))
+
+
 # Notes create/add
 @app_art.route('/upload/', methods=["POST"])
 @login_required
 def upload():
     try:
-        # grab file object (fo) from user input
-        # The fo variable holds the submitted file object. This is an instance of class FileStorage, which Flask imports from Werkzeug.
+        # grab file object (fo) from user input The fo variable holds the submitted file object. This is an instance
+        # of class FileStorage, which Flask imports from Werkzeug.
         fo = request.files['filename']
-        # save file to location defined in __init__.py
-        # ... os.path uses os specific pathing for web server
-        # ... secure_filename checks for integrity of name for operating system. Pass it a filename and it will return a secure version of it.
+        filename = upload_save(fo)
 
-        fo.save(os.path.join(app.config['UPLOAD_FOLDER'], secure_filename(fo.filename)))
-        # ... add to files_uploaded to give feedback of success on HTML page
-        files_uploaded.insert(0, url_for('static', filename='uploads/' + fo.filename))
+        # inserts location of object to feedback list
+        files_uploaded.insert(0, url_for('uploads_endpoint', name=filename))
     except:
         # errors handled, but specific errors are not messaged to user
         pass

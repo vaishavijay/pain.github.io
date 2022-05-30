@@ -28,7 +28,7 @@
             <table class="table">
                 <thead>
                 <tr>
-                    <th><label for="art">Create a new drawing:</label></th>
+                    <th><label for="filename">Create a new drawing:</label></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -47,6 +47,7 @@
             </table>
         </form>
 
+        <form method="POST" ID="delete" action={{url_for('art.delete')}} >
         <div style="position: absolute;width: 775px;height: 780px; top: 160px; left: 1000px;" class="container py-4 text-light bg-success">
         <div class="table-responsive">
             <table class="table">
@@ -61,6 +62,7 @@
             </table>
         </div>
         </div>
+        </form>
 
         <script>
             const MAIN_MOUSE_BUTTON = 0;

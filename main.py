@@ -1,16 +1,14 @@
-from flask import render_template, redirect, request, url_for
+from flask import render_template, redirect, request, url_for, send_from_directory
 from flask_login import login_required
 import json
 from __init__ import app, login_manager
 from cruddy.app_crud import app_crud
-from contenty.app_content import app_content
 from cruddy.app_crud_api import app_crud_api
 from notey.app_notes import app_notes
 from arty.app_art import app_art
 
 from cruddy.login import login, logout, signup
 
-app.register_blueprint(app_content)
 app.register_blueprint(app_crud)
 app.register_blueprint(app_crud_api)
 app.register_blueprint(app_notes)
@@ -22,12 +20,10 @@ def index():
     return render_template("index.html")
 
 
-# Flask-Login directs unauthorised users to this unauthorized_handler
 @login_manager.unauthorized_handler
 def unauthorized():
     """Redirect unauthorized users to Login page."""
-    global next_page
-    next_page = request.endpoint
+    app.config['NEXT_PAGE'] = request.endpoint
     return redirect(url_for('main_login'))
 
 
@@ -35,15 +31,14 @@ def unauthorized():
 @app.route('/login/', methods=["GET", "POST"])
 def main_login():
     # obtains form inputs and fulfills login requirements
-    global next_page
     if request.form:
         email = request.form.get("email")
         password = request.form.get("password")
         if login(email, password):
             try:  # try to redirect to next page
-                temp = next_page
-                next_page = None
-                return redirect(url_for(temp))
+                next_page = app.config['NEXT_PAGE']
+                app.config['NEXT_PAGE'] = None
+                return redirect(url_for(next_page))
             except:  # any failure goes to home page
                 return redirect(url_for('index'))
 
@@ -77,6 +72,17 @@ def main_authorize():
             error_msg = "Passwords do not match"
     # show the auth user page if the above fails for some reason
     return render_template("authorize.html", error_msg=error_msg)
+
+
+@app.route('/drawing/<name>')
+def uploads_endpoint(name):
+    return send_from_directory(app.config["UPLOAD_FOLDER"], name)
+
+
+# register "uploads_endpoint" endpoint so url_for will find all uploaded files
+app.add_url_rule(
+    "/" + app.config['UPLOAD_FOLDER'] + "/<name>", endpoint="uploads_endpoint", build_only=True
+)
 
 
 @app.route('/music')

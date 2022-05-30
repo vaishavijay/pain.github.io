@@ -21,6 +21,9 @@
             </thead>
             <tbody>
             <tr>
+                <td><input type="file" id="filename" name="filename" /></td>
+            </tr>
+            <tr>
                 <td><textarea style="width: 600px;" rows = "10" cols = "100%" name = "notes" id="notes" required></textarea></td>
                 <td><input style="position: absolute; left: 620px; top: 100px;" type="submit" value="Add" ></td>
             </tr>
@@ -45,9 +48,17 @@
                 <table class="table">
                     <tbody>
                     {% for note in notes %}
-                    <tr>
-                        <td>{{ note.note | safe }}</td>
-                    </tr>
+                        {% if note.image %}
+                            <tr>
+                                <td>{{ note.image }}</td>
+                            </tr>
+                            <tr>
+                                <td><image src="{{ url_for('uploads_endpoint', name=note.image) }}" width="150px"></image></td>
+                            </tr>
+                        {% endif %}
+                        <tr>
+                            <td>{{ note.note | safe }}</td>
+                        </tr>
                     {% endfor %}
                     </tbody>
                 </table>

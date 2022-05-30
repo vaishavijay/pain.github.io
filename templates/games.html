@@ -13,17 +13,7 @@
 
         color: #9C9C9C;
     }
-</style>
-<center>
-    <h1> Games </h1>
-    <div class="game center">
-        <div class="canvas-wrapper">
-            <p id="score"></p>
-            <canvas id="canvas-top"></canvas>
-        </div>
-
-    </div>
-    <style>body {
+    body {
         color: white;
         margin: 0;
         background-color: black;
@@ -48,8 +38,19 @@
         position: absolute;
         top:0px;
         left:50px;
-    }</style>
-    <script>let canvas = document.getElementById("canvas-top");
+    }
+</style>
+<center>
+    <h1> Games </h1>
+    <div class="game center">
+        <div class="canvas-wrapper">
+            <p id="score"></p>
+            <canvas id="canvas-top"></canvas>
+        </div>
+
+    </div>
+    <script>
+    let canvas = document.getElementById("canvas-top");
     let ctx = canvas.getContext("2d");
     let gameState = {
         rectPosX: 10,
@@ -223,5 +224,7 @@
             //down arrow
             gameState.rectVelocity.y = -gameState.playerSpeed;
         }
-    });</script>
+    });
+    </script>
+
     {% endblock %}

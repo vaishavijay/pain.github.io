@@ -13,7 +13,8 @@ def users_ilike(term):
     """filter Users table by term into JSON list (ordered by User.name)"""
     term = "%{}%".format(term)  # "ilike" is case insensitive and requires wrapped  %term%
     table = Users.query.order_by(Users.name).filter((Users.name.ilike(term)) | (Users.email.ilike(term)))
-    return [peep.read() for peep in table]
+    json_ready = [peep.read2() for peep in table]
+    return json_ready
 
 
 # SQLAlchemy extract single user from database matching ID

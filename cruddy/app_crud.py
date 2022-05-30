@@ -60,9 +60,12 @@ def update():
     if request.form:
         userid = request.form.get("userid")
         name = request.form.get("name")
+        email = request.form.get("email")
+        password = request.form.get("password")
+        phone = request.form.get("phone")
         po = user_by_id(userid)
         if po is not None:
-            po.update(name)
+            po.update(name, email, password, phone)
     return redirect(url_for('crud.crud'))
 
 
@@ -91,5 +94,7 @@ def search_term():
     """ obtain term/search request """
     req = request.get_json()
     term = req['term']
-    response = make_response(jsonify(users_ilike(term)), 200)
+    json_ready = users_ilike(term)
+    json = jsonify(json_ready)
+    response = make_response(json, 200)
     return response
