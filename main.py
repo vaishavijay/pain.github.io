@@ -114,6 +114,9 @@ def gmap():
 def burnbook():
     return render_template("burnbook.html")
 
+@app.route('/healthquiz')
+def healthquiz():
+    return render_template("healthquiz.html")
 
 @app.route('/api')
 def api():
