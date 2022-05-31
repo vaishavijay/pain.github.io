@@ -51,7 +51,7 @@ files_uploaded = []
 
 def upload_save(file_object):
     # set path to location defined in __init__.py
-    path = app.config['UPLOAD_FOLDER2']
+    path = app.config['UPLOAD_FOLDER']
     if not os.path.exists(path):
         # Create a new directory because it does not exist
         os.makedirs(path)
@@ -79,9 +79,9 @@ def art():
 @app_art.route('/delete/', methods=["POST"])
 def delete():
     if request.form:
-        fo = request.files['filename']
-        if os.path.exists(os.path.join(url_for('static', filename='drawing/' + fo.filename))):
-            os.remove(os.path.join(url_for('static', filename='drawing/' + fo.filename)))
+        path = '/drawing/<name>'
+        if os.path.exists(path):
+            os.remove(path)
 
     return redirect(url_for('art.art'))
 

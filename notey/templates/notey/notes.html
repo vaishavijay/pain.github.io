@@ -12,7 +12,7 @@
     <p style="position: absolute; width: 600px; left: 310px; top: 200px;">[Users can vent out any feelings from everyday life whenever and wherever they feel like it. All information will be saved and users can be ensured that their information is private and secured as soon as they login.]</p>
 
 </div>
-    <form style="position: absolute; left: 300px; top: 300px;" method="POST" ID="create" action={{url_for('notes.create')}}>
+    <form style="position: absolute; left: 300px; top: 300px;" enctype="multipart/form-data" method="POST" ID="create" action={{url_for('notes.create')}}>
         <table class="table">
             <thead>
             <tr>

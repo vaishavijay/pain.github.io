@@ -19,7 +19,7 @@ class Notes(db.Model):
     note = db.Column(db.Text, unique=False, nullable=False)
     # Define a relationship in Notes Schema to userID who originates the note, many-to-one (many notes to one user)
     userID = db.Column(db.Integer, db.ForeignKey('users.userID'))
-
+    image = db.Column(db.String, unique=False)
     # Constructor of a Notes object, initializes of instance variables within object
     def __init__(self, userID, note, image):
         self.note = note
@@ -51,6 +51,7 @@ class Notes(db.Model):
             "id": self.id,
             "note": self.note,
             "userID": self.userID,
+            "image": self.image
         }
 
 
@@ -259,5 +260,4 @@ def model_driver():
 
 
 if __name__ == "__main__":
-    model_tester()  # builds model of Users
-    model_printer()
+    model_driver()
