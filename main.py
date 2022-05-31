@@ -117,6 +117,11 @@ def quiz():
     return render_template("quiz.html")
 
 
+@app.route('/health')
+def health():
+    return render_template("health.html")
+
+
 @app.route('/authorize')
 def authorize():
     return render_template("authorize.html")
@@ -132,8 +137,8 @@ def burnbook():
     return render_template("burnbook.html")
 
 
-#@app.route('/art')
-#def art():
+# @app.route('/art')
+# def art():
 #    return render_template("arty/templates/art.html")
 
 @app.route('/api')
