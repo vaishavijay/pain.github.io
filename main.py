@@ -20,6 +20,7 @@ def index():
     return render_template("index.html")
 
 
+# Flask-Login directs unauthorised users to this unauthorized_handler
 @login_manager.unauthorized_handler
 def unauthorized():
     """Redirect unauthorized users to Login page."""
@@ -31,6 +32,7 @@ def unauthorized():
 @app.route('/login/', methods=["GET", "POST"])
 def main_login():
     # obtains form inputs and fulfills login requirements
+    global next_page
     if request.form:
         email = request.form.get("email")
         password = request.form.get("password")
@@ -115,6 +117,11 @@ def quiz():
     return render_template("quiz.html")
 
 
+@app.route('/health')
+def health():
+    return render_template("health.html")
+
+
 @app.route('/authorize')
 def authorize():
     return render_template("authorize.html")
@@ -130,21 +137,22 @@ def burnbook():
     return render_template("burnbook.html")
 
 
-#@app.route('/art')
-#def art():
+# @app.route('/art')
+# def art():
 #    return render_template("arty/templates/art.html")
 
 @app.route('/api')
 def api():
     import requests
     url = "https://mental-health-info-api.p.rapidapi.com/news/thetimes"
+
     headers = {
         "X-RapidAPI-Host": "mental-health-info-api.p.rapidapi.com",
         "X-RapidAPI-Key": "4ab4681ba9mshf17197c9d59be44p17d1edjsnabe7ccc22eb5"
     }
     response = requests.request("GET", url, headers=headers)
     output = json.loads(response.text)
-    #print(response.text)
+    print(response.text)
     return render_template("api.html", Z=output)
 
 
@@ -156,4 +164,4 @@ def page_not_found(e):
 
 if __name__ == "__main__":
     # Replit required port, works on IntelliJ
-    app.run(debug=True, port="8081")
+    app.run(debug=True)

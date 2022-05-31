@@ -1,22 +1,90 @@
 {% extends "layout.html" %}
 
 {% block content %}
-<style>
-    h1 {
-        width: 576px;
-        height: 94px;
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #e3e5e8;
+        }
+        h1 {
+            margin-top: 10px;
+            height: 60px;
+            font-family: 'Righteous';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 70px;
+            line-height: 75px;
+            color: #6886A2;
+        }
+        h3 {
+            height: 39px;
+            font-family: 'Antonio';
+            font-style: normal;
+            font-size: 30px;
+            line-height: 39px;
+            /* identical to box height */
+            color: #000000;
+        }
+        .center {
+            position: fluid;![](../../../../../var/folders/j_/vpkm1gz12b14z117w4xd363r0000gn/T/TemporaryItems/NSIRD_screencaptureui_pGDKxD/Screen Shot 2022-05-25 at 2.43.41 PM.png)
+            top: 50%:
+            Left: 50%;
+        {#CHANGES POSITION #}
+            transform: translate(50%,50%);
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: #bec2c5;
+            background-size: cover;
+            animation: animate 5s linear infinite
+        }
+        @keyframes animate {
+            0% {
+                box-shadow:
+                        0 0 0 15px rgba(0,0,255,.1),
+                        0 0 0 30px rgba(0,0,255,.1),
+                        0 0 0 45px rgba(0,0,255,.1),
+                        0 0 0 60px rgba(0,0,255,.1),
+                        0 0 0 75px rgba(0,0,255,.1);
+            }
 
-        font-family: 'Righteous';
-        font-style: normal;
-        font-weight: 400;
-        font-size: 60px;
-        line-height: 75px;
+            50% {
+                box-shadow:
+                        0 0 0 25px rgba(0,0,255,.1),
+                        0 0 0 50px rgba(0,0,255,.1),
+                        0 0 0 75px rgba(0,0,255,.1),
+                        0 0 0 100px rgba(0,0,255,.1),
+                        0 0 0 105px rgba(0,0,255,.1);
+            }
+            100% {
+                box-shadow:
+                        0 0 0 15px rgba(0,0,255,.1),
+                        0 0 0 30px rgba(0,0,255,.1),
+                        0 0 0 45px rgba(0,0,255,.1),
+                        0 0 0 60px rgba(0,0,255,.1),
+                        0 0 0 75px rgba(0,0,255,.1);
+            }
+        }
+    </style>
 
-        color: #9C9C9C;
-    }
-</style>
+    <head>
+        <meta charset="UTF-8">
+        <title>Breathing</title>
+    </head>
 
-    <h1> Meditate </h1>
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/inpok4MKVLM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    <body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12"><h1>Meditation/Yoga</h1></div>
+            <div class="col-12"><h3>Breathe in and out with the circle or watch the video for some guided meditation</h3></div>
+        </div>
+        <div class="row">
+            <div class="col-6"><h1><div class="center"></div></h1></div>
+            <div class="col-6"><h1><iframe width="560" height="315" src="https://www.youtube.com/embed/inpok4MKVLM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </h1></div>
+        </div>
+    </body>
 
 {% endblock %}
+{#animation tutorial credit: https://www.youtube.com/watch?v=BSoIOi3GWy4&ab_channel=OnlineTutorials#}
