@@ -1,0 +1,143 @@
+{% extends "layout.html" %}
+
+    {% block title %}
+        <title>Drawing for {{ user.name }}</title>
+    {% endblock %}
+
+    {% block content %}
+        <style>
+            #theCanvas {
+                height: 400px;
+                width: 400px;
+                background: white;
+            }
+            .clearButton {background-color: #b99f7a;} /* Tan */
+
+            body {
+                background: #eee;
+            }
+        </style>
+        <div class="container py-4">
+            <header class="pb-3 mb-4 border-bottom border-primary text-dark">
+                <h2>{{ user.name }}'s Drawing</h2>
+            </header>
+            <p style="position: absolute; width: 600px; left: 310px; top: 200px;">Drawing can help reduce stress!</p>
+
+        </div>
+        <form style="position: absolute; left: 300px; top: 300px;" id="upload" enctype="multipart/form-data" action = "{{url_for('art.upload')}}" method = "POST">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th><label for="filename">Create a new drawing:</label></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>
+                        <canvas id="theCanvas"></canvas>
+                        <div>
+                            <button class="button clearButton" id="clearButton">Clear</button>
+                            <button><a href="#" onclick="prepDownload(this, document.getElementById('theCanvas'), 'imgName.png')">Save your drawing</a></button>
+                            <input type="file" id="filename" name="filename" />
+                            <input type="submit" value="Upload" >
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </form>
+
+        <form method="POST" ID="delete" action={{url_for('art.delete')}} >
+        <div style="position: absolute;width: 775px;height: 780px; top: 160px; left: 1000px;" class="container py-4 text-light bg-success">
+        <div class="table-responsive">
+            <table class="table">
+                <tbody>
+                {% for file in files %}
+                    <tr>
+                        <td><image src="{{ file }}" style="width: 400px;"></image></td>
+                        <td><input type="submit" value="delete"></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        </div>
+        </form>
+
+        <script>
+            const MAIN_MOUSE_BUTTON = 0;
+            function prepDownload(a, canvas, name) {
+                a.download = name
+                a.href = canvas.toDataURL()
+            }
+            function prepareContext(canvasElement) {
+                let dpr = window.devicePixelRatio || 1;
+                let rect = canvasElement.getBoundingClientRect();
+                canvasElement.width = rect.width * dpr;
+                canvasElement.height = rect.height * dpr;
+
+                let context = canvasElement.getContext("2d");
+                context.scale(dpr, dpr);
+
+                return context;
+            }
+
+            function setLineProperties(context) {
+                context.lineWidth = 4;
+                context.lineJoin = "round";
+                context.lineCap = "round";
+                return context;
+            }
+
+            let clearButton = document.getElementById("clearButton");
+            let theCanvas = document.getElementById("theCanvas");
+            let theContext = prepareContext(theCanvas);
+            let shouldDraw = false;
+
+            theCanvas.addEventListener("mousedown", start);
+            theCanvas.addEventListener("mouseup", end);
+            theCanvas.addEventListener("mousemove", move, false);
+
+            clearButton.addEventListener("click", event => {
+                clearCanvas(theContext);
+            });
+
+
+            function clearCanvas(context) {
+                context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+            }
+
+            function start(event) {
+                if (event.button === MAIN_MOUSE_BUTTON) {
+                    shouldDraw = true;
+                    setLineProperties(theContext);
+
+                    theContext.beginPath();
+
+                    let elementRect = event.target.getBoundingClientRect();
+                    theContext.moveTo(event.clientX - elementRect.left, event.clientY - elementRect.top);
+                }
+            }
+
+            function end(event) {
+                if (event.button === MAIN_MOUSE_BUTTON) {
+                    shouldDraw = false;
+                }
+            }
+
+            function move(event) {
+                if (shouldDraw) {
+                    let elementRect = event.target.getBoundingClientRect();
+                    theContext.lineTo(event.clientX - elementRect.left, event.clientY - elementRect.top);
+                    theContext.stroke()
+                }
+                document.getElementById('save').onclick = function () {
+                    window.location = document.getElementById("art").toDataURL('image/png');
+                };
+                async function downloadCanvas(el) {
+                    const imageURI = canvas.toDataURL("image/jpg");
+                    el.href = imageURI;
+                };
+            }</script>
+
+{% endblock %}

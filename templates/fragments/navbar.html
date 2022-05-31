@@ -11,14 +11,21 @@
         border: none;
     }
 
-    .dropdown-menu {
+    .dropdown-menuex {
         position: relative;
         display: inline-block;
     }
     .dropdown-menu1 {
         position: relative;
     }
-    .menu-content {
+    .menu-contentex {
+        display: none;
+        position: absolute;
+        background-color: #040008;
+        min-width: 160px;
+        z-index: 1;
+    }
+    .menu-content1 {
         display: none;
         position: absolute;
         background-color: #040008;
@@ -43,18 +50,19 @@
     .links-hidden:hover,.links:hover {
         background-color: rgb(8, 107, 46);
     }
-    .dropdown-menu:hover .menu-content {
+    .dropdown-menuex:hover .menu-contentex {
         display: block;
     }
-    .dropdown-menu:hover .menu-btn {
+    .dropdown-menuex:hover .menu-btn {
         background-color: #3e8e41;
     }
-    .dropdown-menu1:hover .menu-content {
+    .dropdown-menu1:hover .menu-content1 {
         display: block;
     }
     .dropdown-menu1:hover .menu-btn {
         background-color: #3e8e41;
     }
+
 </style>
 
 <nav class="navbar navbar-expand-lg text-navbar-dark-color bg-navbar-light-color">
@@ -68,7 +76,7 @@
         </div>
         <div class="dropdown-menu1">
                 <a class="menu-btn1">Games</a>
-            <div class="menu-content">
+            <div class="menu-content1">
                 <a class="nav-link" href="{{ url_for('games') }}">Avoid the Blue Block</a>
                 <a class="nav-link" href="{{ url_for('game1') }}">Snake Game</a>
                 <a class="nav-link" href="{{ url_for('game2') }}">Flappy</a>
@@ -77,10 +85,24 @@
         </div>
         <a class="nav-link" href="{{ url_for('music') }}">Music</a>
         <a class="nav-link" href="{{ url_for('api') }}">Info</a>
+        <a class="nav-link" href="{{ url_for('quiz') }}">Personality Test</a>
 
+        {% if current_user.is_authenticated %}
+            <a class="nav-link" href="{{ url_for('art.art') }}">Draw</a>
+        {% else %}
+            <a class="nav-link" href="{{ url_for('main_login') }}">Draw</a>
+        {% endif %}
+
+
+
+
+        {#    THE BELOW TWO LINES ARE TEMPORARY UNTIL THE DROPDOWN WORKS#}
         <a class="nav-link" href="{{ url_for('notes.notes') }}">Journal</a>
         <a class="nav-link" href="{{ url_for('burnbook') }}">Burn Book</a>
         <a class="nav-link" href="{{ url_for('meditate') }}">Meditation</a>
+{#
+#}
+
 
 
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
@@ -93,12 +115,20 @@
                 <a class="nav-link" href="{{ url_for('main_login') }}">Map</a>
                 {% endif %}
             </div>
+
+            <!-- url_for is a Jinja2 pre-processor that finds route from function name (def) -->
+
             <!-- url_for is a Jinja2 pre-processor that finds route from function name (def) -->
         </div>
         <!-- Google Search -->
         <div class="col-4 btn-group">
             <script async src="https://cse.google.com/cse.js?cx=c34a1f44743fb5273"></script>
             <div class="gcse-search"></div>
+        </div>
+
+
+        <div class="btn-group">
+
             <!-- Clock display -->
             <div class="px-3 text-navbar-dark-color">
                 <span id="clock"></span>
@@ -111,9 +141,9 @@
 
             {% if current_user.is_authenticated %}
 
-            <div class="dropdown-menu">
-                <button class="menu-btn">{{current_user.name}} <</button>
-                <div class="menu-content">
+            <div class="dropdown-menuex">
+                <button class="menu-btn">{{current_user.name}} </button>
+                <div class="menu-contentex">
                     <a class="links-hidden" href="{{ url_for('crud.crud') }}">Admin Page</a>
                     <a class="links-hidden" href="{{ url_for('crud.search') }}">Database Search</a>
                     <a class="links-hidden" href="{{ url_for('main_logout') }}">Logout</a>

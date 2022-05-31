@@ -1,16 +1,18 @@
-from flask import render_template, redirect, request, url_for
+from flask import render_template, redirect, request, url_for, send_from_directory
 from flask_login import login_required
 import json
 from __init__ import app, login_manager
 from cruddy.app_crud import app_crud
 from cruddy.app_crud_api import app_crud_api
 from notey.app_notes import app_notes
+from arty.app_art import app_art
 
 from cruddy.login import login, logout, signup
 
 app.register_blueprint(app_crud)
 app.register_blueprint(app_crud_api)
 app.register_blueprint(app_notes)
+app.register_blueprint(app_art)
 
 
 @app.route('/')
@@ -22,8 +24,7 @@ def index():
 @login_manager.unauthorized_handler
 def unauthorized():
     """Redirect unauthorized users to Login page."""
-    global next_page
-    next_page = request.endpoint
+    app.config['NEXT_PAGE'] = request.endpoint
     return redirect(url_for('main_login'))
 
 
@@ -37,9 +38,9 @@ def main_login():
         password = request.form.get("password")
         if login(email, password):
             try:  # try to redirect to next page
-                temp = next_page
-                next_page = None
-                return redirect(url_for(temp))
+                next_page = app.config['NEXT_PAGE']
+                app.config['NEXT_PAGE'] = None
+                return redirect(url_for(next_page))
             except:  # any failure goes to home page
                 return redirect(url_for('index'))
 
@@ -75,6 +76,17 @@ def main_authorize():
     return render_template("authorize.html", error_msg=error_msg)
 
 
+@app.route('/drawing/<name>')
+def uploads_endpoint(name):
+    return send_from_directory(app.config["UPLOAD_FOLDER"], name)
+
+
+# register "uploads_endpoint" endpoint so url_for will find all uploaded files
+app.add_url_rule(
+    "/" + app.config['UPLOAD_FOLDER'] + "/<name>", endpoint="uploads_endpoint", build_only=True
+)
+
+
 @app.route('/music')
 def music():
     return render_template("music.html")
@@ -100,6 +112,11 @@ def game2():
     return render_template("game2.html")
 
 
+@app.route('/quiz')
+def quiz():
+    return render_template("quiz.html")
+
+
 @app.route('/authorize')
 def authorize():
     return render_template("authorize.html")
@@ -114,9 +131,10 @@ def gmap():
 def burnbook():
     return render_template("burnbook.html")
 
-@app.route('/healthquiz')
-def healthquiz():
-    return render_template("healthquiz.html")
+
+#@app.route('/art')
+#def art():
+#    return render_template("arty/templates/art.html")
 
 @app.route('/api')
 def api():
