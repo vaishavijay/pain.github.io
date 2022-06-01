@@ -8,7 +8,7 @@
         <style>
             #theCanvas {
                 height: 400px;
-                width: 400px;
+                width: 1300px;
                 background: white;
             }
             .clearButton {background-color: #b99f7a;} /* Tan */
@@ -28,6 +28,7 @@
             tr { background: rgba(0,0,0,0.2); }
             td { background: rgba(0,0,0,0.2); }
         </style>
+        <div class="container">
         <div id="video_wrapper">
             <video autoplay loop>
                 <source src="https://drive.google.com/uc?export=view&id=1G-m-iQQlkUODRgaMEpqSUYftLSNev--S" type="video/mp4">
@@ -37,10 +38,12 @@
             <header class="pb-3 mb-4 border-bottom border-primary text-dark">
                 <h2>{{ user.name }}'s Drawing</h2>
             </header>
-            <p style="position: absolute; width: 600px; left: 310px; top: 200px;">Drawing can help reduce stress!</p>
+            <p class="pb-3 mb-4 border-bottom border-primary text-white" style="width: 600px; left: 310px; top: 200px;">Drawing can help reduce stress!</p>
 
         </div>
-        <form style="position: absolute; left: 300px; top: 300px;" id="upload" enctype="multipart/form-data" action = "{{url_for('art.upload')}}" method = "POST">
+        <div class="row justify-content-center align-content-center">
+        <div class="col-sm-12">
+        <form style="left: 300px; top: 300px;" id="upload" enctype="multipart/form-data" action = "{{url_for('art.upload')}}" method = "POST">
             <table class="table">
                 <thead>
                 <tr>
@@ -64,24 +67,25 @@
                 </tbody>
             </table>
         </form>
-
-        <form method="POST" ID="delete" action={{url_for('art.delete')}} >
-        <div style="position: absolute;width: 775px;height: 780px; top: 168px; left: 1000px; ">
-        <div class="table-responsive">
-            <table class="table">
-                <tbody>
-                {% for file in files %}
-                    <tr>
-                        <td><image src="{{ file }}" style="width: 400px;"></image></td>
-                        <td><input type="submit" value="delete"></td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
+            <form method="POST" ID="delete" action={{url_for('art.delete')}} >
+                <div style="width: 700px;height: 780px; top: 168px; left: 1000px; ">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <tbody>
+                            {% for file in files %}
+                                <tr>
+                                    <td><image src="{{ file }}" style="width: 400px;"></image></td>
+                                    <td><input type="submit" value="delete"></td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </form>
         </div>
         </div>
-        </form>
-
+        </div>
         <script>
             const MAIN_MOUSE_BUTTON = 0;
             function prepDownload(a, canvas, name) {
