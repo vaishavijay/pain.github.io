@@ -78,6 +78,7 @@ def art():
 
 @app_art.route('/delete/', methods=["POST"])
 def delete():
+    print("art.delete")
     if request.form:
         path = '/drawing/<name>'
         if os.path.exists(path):

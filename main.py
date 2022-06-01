@@ -164,4 +164,4 @@ def page_not_found(e):
 
 if __name__ == "__main__":
     # Replit required port, works on IntelliJ
-    app.run(debug=False)
+    app.run(debug=True)
