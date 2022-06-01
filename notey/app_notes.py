@@ -12,8 +12,6 @@ app_notes = Blueprint('notes', __name__,
                       template_folder='templates/notey/',
                       static_folder='static',
                       static_url_path='static')
-
-
 def notes_display(uo):  # uo is user object
     # defaults are empty, in case user data not found
     user = ""
