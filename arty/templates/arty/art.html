@@ -16,7 +16,23 @@
             body {
                 background: #eee;
             }
+            h2 {
+                background: rgba(0,0,0,0.4);
+                color: rgb(255,255,255);
+            }
+            p{
+                background: rgba(0,0,0,0.4);
+                color: rgb(255,255,255);
+            }
+            table { background: rgba(0,0,0,0.2); }
+            tr { background: rgba(0,0,0,0.2); }
+            td { background: rgba(0,0,0,0.2); }
         </style>
+        <div id="video_wrapper">
+            <video autoplay loop>
+                <source src="https://drive.google.com/uc?export=view&id=1G-m-iQQlkUODRgaMEpqSUYftLSNev--S" type="video/mp4">
+            </video>
+        </div>
         <div class="container py-4">
             <header class="pb-3 mb-4 border-bottom border-primary text-dark">
                 <h2>{{ user.name }}'s Drawing</h2>
@@ -28,7 +44,7 @@
             <table class="table">
                 <thead>
                 <tr>
-                    <th><label for="filename">Create a new drawing:</label></th>
+                    <th><label for="filename" style="background: rgba(0,0,0,0.4); color: rgb(255,255,255);">Create a new drawing:</label></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -50,7 +66,7 @@
         </form>
 
         <form method="POST" ID="delete" action={{url_for('art.delete')}} >
-        <div style="position: absolute;width: 775px;height: 780px; top: 160px; left: 1000px;" class="container py-4 text-light bg-success">
+        <div style="position: absolute;width: 775px;height: 780px; top: 168px; left: 1000px; ">
         <div class="table-responsive">
             <table class="table">
                 <tbody>
