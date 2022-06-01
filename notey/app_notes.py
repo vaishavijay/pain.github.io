@@ -5,6 +5,7 @@ from cruddy.query import user_by_id
 from cruddy.model import Notes
 from arty.app_art import upload_save
 
+
 # blueprint defaults https://flask.palletsprojects.com/en/2.0.x/api/#blueprint-objects
 app_notes = Blueprint('notes', __name__,
                       url_prefix='/notes',
