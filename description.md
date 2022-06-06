@@ -8,6 +8,9 @@ layout: default
   </video>
 </div>
 
+**Project Commercial Video**
+https://youtu.be/nKTR7veh3Xw
+
 **Project Description**
 
 Our project will support high school students who struggle with mental health. Our website will be an open resource available for students who want to find articles, contact therapists, or find simple solutions to find relief. High school is a time of lots of stress, anxiety, and with our website, we hope to aid high school students across the nation and support them so they can reach their highest potential!
