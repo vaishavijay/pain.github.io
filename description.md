@@ -9,7 +9,7 @@ layout: default
 </div>
 
 **Project Commercial Video**
-1. https://youtu.be/nKTR7veh3Xw
+1. [Link to Video](https://youtu.be/nKTR7veh3Xw)
 
 **Project Description**
 
