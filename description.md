@@ -11,6 +11,14 @@ layout: default
 **Project Commercial Video**
 1. [Link to Video](https://youtu.be/nKTR7veh3Xw)
 
+**Sponsor Assessment (Notes from Final Meeting with Sponsor)**
+* The website does have information to spread awareness and has a link accessible to anyone at home.
+* With the games and Spotify playlist, it seems to nicely fit in with what the teens love!
+* Making the Therapist Contacting Page a Map was a really neat idea. 
+* The Info Page with newly updating articles allows more relevant information to be shown which was smart. 
+* The Vent Journal is just what I asked for!
+* Overall great job going above and beyond my expectations!
+
 **Project Description**
 
 Our project will support high school students who struggle with mental health. Our website will be an open resource available for students who want to find articles, contact therapists, or find simple solutions to find relief. High school is a time of lots of stress, anxiety, and with our website, we hope to aid high school students across the nation and support them so they can reach their highest potential!
